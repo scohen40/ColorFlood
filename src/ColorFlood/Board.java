@@ -8,7 +8,9 @@ public class Board {
     private Cell[][] gameBoard;
     private final int GAME_COLS;
     private final int GAME_ROWS;
-    private Color [] gameColors;
+    private Color[] gameColors;
+
+    private int activeCells;
 
     public Board(int GAME_COLS, int GAME_ROWS) {
         this.GAME_COLS = GAME_COLS;
@@ -28,5 +30,16 @@ public class Board {
                 Cell cell = new Cell(col, row, gameColors[cellColor]);
             }
         }
+    }
+
+
+
+    private boolean gameOver(){
+        return (GAME_COLS * GAME_ROWS) == activeCells || timesUp();
+    }
+
+    private boolean timesUp() {
+        //if timer = 0
+        return false;
     }
 }
