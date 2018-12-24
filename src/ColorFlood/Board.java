@@ -34,6 +34,8 @@ public class Board {
 
     private Cell startCell() {
         //get start cell from user click
+        //mark active
+        //iterate active cells
         return null;
     }
 
@@ -42,7 +44,8 @@ public class Board {
             for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard [col][row];
                 if (cell.isActive()){
-                    //check for neighbors of searchcolor and activate
+                    //check for neighbors of search color and activate
+                    //iterate active cells
                 }
             }
 
