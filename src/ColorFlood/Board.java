@@ -32,9 +32,35 @@ public class Board {
         }
     }
 
+    private Cell startCell() {
+        //get start cell from user click
+        return null;
+    }
 
+    private void findAdjoiningCells(Color color){
+        for (int col = 0; col < GAME_COLS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
+                Cell cell = gameBoard [col][row];
+                if (cell.isActive()){
+                    //check for neighbors of searchcolor and activate
+                }
+            }
 
-    private boolean gameOver(){
+        }
+    }
+
+    private void colorActiveCells(Color color){
+        for (int col = 0; col < GAME_COLS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
+                Cell cell = gameBoard [col][row];
+                if (cell.isActive()){
+                    cell.setColor(color);
+                }
+            }
+        }
+    }
+
+    private boolean gameOver() {
         return (GAME_COLS * GAME_ROWS) == activeCells || timesUp();
     }
 
