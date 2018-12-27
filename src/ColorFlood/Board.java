@@ -54,48 +54,59 @@ public class Board {
                 if (cell.isActive()){
                     //check for neighbors of search color and activate
                     //iterate active cells
-                    neighbors.addAll(neighborsToActivate(cell));
+                    neighborsToActivate(cell);
+                    //neighbors.addAll(neighborsToActivate(cell));
                 }
             }
         }
-        //set active after finding all cells that are active when user clicked
+        /*//set active after finding all cells that are active when user clicked
         for (Cell neighbor : neighbors)
         {
             neighbor.setActive(true);
             activeCells++;
-        }
+        }*/ //set active in neighborstoactivate because then it will keep checking for same colored blocks
     }
 
-    private ArrayList<Cell> neighborsToActivate(Cell cell)
+    private void neighborsToActivate(Cell cell)
     {
-        ArrayList<Cell> activatedNeighbors = new ArrayList<>();
+        //ArrayList<Cell> activatedNeighbors = new ArrayList<>();
 
         //top
         if (cell.getRow() != 0 && !gameBoard[cell.getCol()][cell.getRow() - 1].isActive()
                 && gameBoard[cell.getCol()][cell.getRow() - 1].getColor() == selectedColor)
         {
-            activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() - 1]);
+            //activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() - 1]);
+            setCellActive(gameBoard[cell.getCol()][cell.getRow() - 1]);
         }
         //bottom
         if (cell.getRow() < (GAME_ROWS - 1) && !gameBoard[cell.getCol()][cell.getRow() + 1].isActive()
                 && gameBoard[cell.getCol()][cell.getRow() + 1].getColor() == selectedColor)
         {
-            activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() + 1]);
+            //activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() + 1]);
+            setCellActive(gameBoard[cell.getCol()][cell.getRow() + 1]);
         }
         //left
         if (cell.getCol() != 0 && !gameBoard[cell.getCol() - 1][cell.getRow()].isActive()
                 && gameBoard[cell.getCol() - 1][cell.getRow()].getColor() == selectedColor)
         {
-            activatedNeighbors.add(gameBoard[cell.getCol() - 1][cell.getRow()]);
+            //activatedNeighbors.add(gameBoard[cell.getCol() - 1][cell.getRow()]);
+            setCellActive(gameBoard[cell.getCol() - 1][cell.getRow()]);
         }
         //right
         if (cell.getCol() < (GAME_ROWS - 1) && !gameBoard[cell.getCol() + 1][cell.getRow()].isActive()
                 && gameBoard[cell.getCol() + 1][cell.getRow()].getColor() == selectedColor)
         {
-            activatedNeighbors.add(gameBoard[cell.getCol() + 1][cell.getRow()]);
+            //activatedNeighbors.add(gameBoard[cell.getCol() + 1][cell.getRow()]);
+            setCellActive(gameBoard[cell.getCol() + 1][cell.getRow()]);
         }
 
-        return activatedNeighbors;
+        //return activatedNeighbors;
+    }
+
+    private void setCellActive(Cell cell)
+    {
+        cell.setActive(true);
+        activeCells++;
     }
 
     private void colorActiveCells(Color color){
