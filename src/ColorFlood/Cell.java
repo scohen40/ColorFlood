@@ -17,6 +17,16 @@ public class Cell {
         this.color = color;
     }
 
+    public int getCol()
+    {
+        return col;
+    }
+
+    public int getRow()
+    {
+        return row;
+    }
+
     public boolean isActive() {
         return active;
     }

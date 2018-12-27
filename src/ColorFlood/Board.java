@@ -1,6 +1,7 @@
 package ColorFlood;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
@@ -9,7 +10,7 @@ public class Board {
     private final int GAME_COLS;
     private final int GAME_ROWS;
     private Color[] gameColors;
-
+    private Color selectedColor;
     private int activeCells;
 
     public Board(int GAME_COLS, int GAME_ROWS) {
@@ -39,17 +40,62 @@ public class Board {
         return null;
     }
 
-    private void findAdjoiningCells(Color color){
+    public void setSelectedColor(Color selectedColor)
+    {
+        //set color based on button clicked
+        this.selectedColor = selectedColor;
+    }
+
+    private void activateNeighbors(){
+        ArrayList<Cell> neighbors = new ArrayList<>();
         for (int col = 0; col < GAME_COLS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard [col][row];
                 if (cell.isActive()){
                     //check for neighbors of search color and activate
                     //iterate active cells
+                    neighbors.addAll(neighborsToActivate(cell));
                 }
             }
-
         }
+        //set active after finding all cells that are active when user clicked
+        for (Cell neighbor : neighbors)
+        {
+            neighbor.setActive(true);
+            activeCells++;
+        }
+    }
+
+    private ArrayList<Cell> neighborsToActivate(Cell cell)
+    {
+        ArrayList<Cell> activatedNeighbors = new ArrayList<>();
+
+        //top
+        if (cell.getRow() != 0 && !gameBoard[cell.getCol()][cell.getRow() - 1].isActive()
+                && gameBoard[cell.getCol()][cell.getRow() - 1].getColor() == selectedColor)
+        {
+            activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() - 1]);
+        }
+        //bottom
+        if (cell.getRow() < (GAME_ROWS - 1) && !gameBoard[cell.getCol()][cell.getRow() + 1].isActive()
+                && gameBoard[cell.getCol()][cell.getRow() + 1].getColor() == selectedColor)
+        {
+            activatedNeighbors.add(gameBoard[cell.getCol()][cell.getRow() + 1]);
+        }
+        //left
+        if (cell.getCol() != 0 && !gameBoard[cell.getCol() - 1][cell.getRow()].isActive()
+                && gameBoard[cell.getCol() - 1][cell.getRow()].getColor() == selectedColor)
+        {
+            activatedNeighbors.add(gameBoard[cell.getCol() - 1][cell.getRow()]);
+        }
+        //right
+        if (cell.getCol() < (GAME_ROWS - 1) && !gameBoard[cell.getCol() + 1][cell.getRow()].isActive()
+                && gameBoard[cell.getCol() + 1][cell.getRow()].getColor() == selectedColor)
+        {
+            activatedNeighbors.add(gameBoard[cell.getCol() + 1][cell.getRow()]);
+        }
+
+        return activatedNeighbors;
     }
 
     private void colorActiveCells(Color color){
@@ -61,6 +107,12 @@ public class Board {
                 }
             }
         }
+    }
+
+    public void flood(Color color)
+    {
+        activateNeighbors();
+        colorActiveCells(selectedColor); //call here or in repaint?
     }
 
     private boolean gameOver() {
