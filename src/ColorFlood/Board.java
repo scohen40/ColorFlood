@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
-
-    private Cell[][] gameBoard;
+    public Cell[][] gameBoard;
     private final int GAME_COLS;
     private final int GAME_ROWS;
     private Color[] gameColors;
