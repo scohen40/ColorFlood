@@ -1,4 +1,4 @@
-package ColorFlood;
+package src.ColorFlood;
 
 import java.awt.*;
 
