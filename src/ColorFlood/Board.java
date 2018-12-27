@@ -6,28 +6,30 @@ import java.util.Random;
 public class Board {
 
     private Cell[][] gameBoard;
-    private final int GAME_COLS;
-    private final int GAME_ROWS;
-    private Color[] gameColors;
+    private final int gameColumns;
+    private final int gameRows;
 
     private int activeCells;
 
-    public Board(int GAME_COLS, int GAME_ROWS) {
-        this.GAME_COLS = GAME_COLS;
-        this.GAME_ROWS = GAME_ROWS;
-        Colors gameColors = new Colors();
-        this.gameColors = gameColors.getColors();
+    /**
+     * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
+     * @param gameColumns
+     * @param gameRows
+     */
+    public Board(int gameColumns, int gameRows) {
+        this.gameColumns = gameColumns;
+        this.gameRows = gameRows;
         createGameBoard();
     }
 
     private void createGameBoard() {
         Random random = new Random();
         int cellColor;
-        gameBoard = new Cell[GAME_COLS][GAME_ROWS];
-        for (int col = 0; col < GAME_COLS; col++) {
-            for (int row = 0; row < GAME_ROWS; row++) {
-                cellColor = random.nextInt(gameColors.length - 1);
-                Cell cell = new Cell(col, row, gameColors[cellColor]);
+        gameBoard = new Cell[gameColumns][gameRows];
+        for (int col = 0; col < gameColumns; col++) {
+            for (int row = 0; row < gameRows; row++) {
+                cellColor = random.nextInt(BoardProperties.COLORS.length - 1);
+                Cell cell = new Cell(col, row, BoardProperties.COLORS[cellColor]);
             }
         }
     }
@@ -40,8 +42,8 @@ public class Board {
     }
 
     private void findAdjoiningCells(Color color){
-        for (int col = 0; col < GAME_COLS; col++) {
-            for (int row = 0; row < GAME_ROWS; row++) {
+        for (int col = 0; col < gameColumns; col++) {
+            for (int row = 0; row < gameRows; row++) {
                 Cell cell = gameBoard [col][row];
                 if (cell.isActive()){
                     //check for neighbors of search color and activate
@@ -53,8 +55,8 @@ public class Board {
     }
 
     private void colorActiveCells(Color color){
-        for (int col = 0; col < GAME_COLS; col++) {
-            for (int row = 0; row < GAME_ROWS; row++) {
+        for (int col = 0; col < gameColumns; col++) {
+            for (int row = 0; row < gameRows; row++) {
                 Cell cell = gameBoard [col][row];
                 if (cell.isActive()){
                     cell.setColor(color);
@@ -64,7 +66,7 @@ public class Board {
     }
 
     private boolean gameOver() {
-        return (GAME_COLS * GAME_ROWS) == activeCells || timesUp();
+        return (gameColumns * gameRows) == activeCells || timesUp();
     }
 
     private boolean timesUp() {
