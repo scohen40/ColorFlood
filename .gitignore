@@ -1,6 +1,6 @@
 .idea/
 out/
-src.ColorFlood.iml
+ColorFlood.iml
 .idea/vcs.xml
 target/
 vcs.xml

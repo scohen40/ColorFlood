@@ -1,4 +1,4 @@
-package src.ColorFlood;
+package ColorFlood;
 
 import java.awt.*;
 
@@ -18,8 +18,5 @@ public class BoardProperties {
 
     static int BOARD_ROWS_HARD = 20;
     static int BOARD_COLUMNS_HARD = 20;
-
-
-
 
 }
