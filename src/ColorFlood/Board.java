@@ -118,7 +118,7 @@ public class Board {
         }
     }
 
-    public void flood(Color color) {
+    public void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor); //call here or in repaint?
     }
