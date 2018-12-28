@@ -130,5 +130,6 @@ public class Board {
     public boolean timesUp() {
         //if timer = 0
         return true;
+        //else return false (as long as timer isn't up
     }
 }
