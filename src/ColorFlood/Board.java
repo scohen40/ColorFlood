@@ -9,7 +9,7 @@ public class Board {
     private final int GAME_COLS;
     private final int GAME_ROWS;
     private Color[] gameColors;
-    private Color selectedColor;
+    public Color selectedColor;
     private int activeCells;
 
     public Board(int GAME_COLS, int GAME_ROWS) {
