@@ -23,6 +23,7 @@ public class Board {
     public Board(int gameColumns, int gameRows) {
         this.gameColumns = gameColumns;
         this.gameRows = gameRows;
+
         createGameBoard();
     }
 

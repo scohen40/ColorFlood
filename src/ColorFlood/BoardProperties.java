@@ -3,6 +3,7 @@ package src.ColorFlood;
 import java.awt.*;
 
 public class BoardProperties {
+
     public static final Color[] COLORS = new Color[]
             {
                     Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
