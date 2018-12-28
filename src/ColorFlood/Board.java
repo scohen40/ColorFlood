@@ -5,6 +5,13 @@ import java.util.Random;
 
 public class Board {
 
+    public Cell[][] gameBoard;
+    private final int GAME_COLS;
+    private final int GAME_ROWS;
+    private Color[] gameColors;
+    public Color selectedColor;
+
+
     private Cell[][] gameBoard;
 
     private final int gameColumns;
