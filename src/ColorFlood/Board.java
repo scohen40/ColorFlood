@@ -1,4 +1,4 @@
-package src.ColorFlood;
+package ColorFlood;
 
 import java.awt.*;
 import java.util.Random;
