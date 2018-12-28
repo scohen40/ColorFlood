@@ -1,4 +1,4 @@
-package ColorFlood;
+package src.ColorFlood;
 
 import java.awt.*;
 
@@ -15,6 +15,16 @@ public class Cell {
         this.col = col;
         this.row = row;
         this.color = color;
+    }
+
+    public int getCol()
+    {
+        return col;
+    }
+
+    public int getRow()
+    {
+        return row;
     }
 
     public boolean isActive() {
