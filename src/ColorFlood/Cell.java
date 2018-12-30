@@ -5,16 +5,16 @@ import java.awt.*;
 
 public class Cell {
 
-    private int col;
     private int row;
+    private int col;
 
     private boolean active = false;
 
     private Color color;
 
-    public Cell(int col, int row, Color color) {
-        this.col = col;
+    public Cell(int row, int col, Color color) {
         this.row = row;
+        this.col = col;
         this.color = color;
     }
 

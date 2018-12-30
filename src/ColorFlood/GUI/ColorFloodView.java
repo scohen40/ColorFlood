@@ -3,17 +3,15 @@ package ColorFlood.GUI;
 import ColorFlood.Properties;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
-
     private JPanel timerPanel;
-
-    private JPanel boardPanel;
-
+    private BoardView boardView;
     private JPanel gameControls;
 
     private JButton buttonRed;
@@ -28,17 +26,17 @@ public class ColorFloodView extends JFrame {
 
 
     protected ColorFloodView() {
-        //game view setup
+
         initializeGamePanel();
 
         setUpTimerPanel();
 
-        setUpBoardPanel();
+        setUpBoardView();
 
         setUpControlPanel();
 
         panel.add(timerPanel, BorderLayout.NORTH);
-        panel.add(boardPanel, BorderLayout.CENTER);
+        panel.add(boardView, BorderLayout.CENTER);
         panel.add(gameControls, BorderLayout.SOUTH);
 
         add(panel);
@@ -67,17 +65,11 @@ public class ColorFloodView extends JFrame {
     }
 
 
-    private void setUpBoardPanel() {
-        boardPanel = new JPanel();
-
+    private void setUpBoardView() {
         String difficulty = preGameQuery();
-        BoardView boardView = new BoardView(difficulty);
+        boardView = new BoardView(difficulty);
 
-        boardPanel.setBorder(new LineBorder(Color.WHITE));
-        boardPanel.setBackground(Properties.BACKGROUND_COLOR);
-        boardPanel.setPreferredSize(Properties.BOARD_SIZE);
-        boardPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
-        boardPanel.add(boardView);
+       // boardView.setBorder(new EmptyBorder(10, 0, 10, 0));
     }
 
     private String preGameQuery() {
@@ -145,10 +137,6 @@ public class ColorFloodView extends JFrame {
             button.setEnabled(clickable);
         }
     }
-
-
-
-
 
 
 

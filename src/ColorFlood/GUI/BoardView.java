@@ -36,12 +36,8 @@ public class BoardView extends JComponent {
 
         setUpBoardDimensions();
 
-        setUpBoardButtons();
 
-    }
 
-    private void setUpBoardButtons() {
-        cellButtons = new ArrayList<JButton>();
     }
 
     private void setUpColRowSizes() {
@@ -65,19 +61,16 @@ public class BoardView extends JComponent {
 
 
     protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+
         Graphics2D g = (Graphics2D) graphics;
 
         setUpColRowSizes();
 
-    //    paintBackground(g);
-
         paintGrid(g);
     }
 
-    private void paintBackground(Graphics2D g) {
-        setBackground(Properties.BACKGROUND_COLOR);
-        setOpaque(true);
-    }
+
 
 
     private void paintGrid(Graphics2D g) {
@@ -92,10 +85,10 @@ public class BoardView extends JComponent {
                 cell = board.getGameBoard()[r][c];
 
                 g.setColor(cell.getColor());
-                g.fillRoundRect((int)(c * boardColWidth + 7),
-                        (int)(r * boardRowHeight + 7),
-                        (int) (boardColWidth / 1.3),
+                g.fillRoundRect((int)(r * boardRowHeight + 23),
+                        (int)(c * boardColWidth + 3),
                         (int) (boardRowHeight / 1.3),
+                        (int) (boardColWidth / 1.3),
                         10,
                         10);
 
