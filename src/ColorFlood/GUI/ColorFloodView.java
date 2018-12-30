@@ -1,16 +1,18 @@
 package ColorFlood.GUI;
 
-import ColorFlood.BoardProperties;
+import ColorFlood.Properties;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
 
+    private JPanel timerPanel;
+
     private JPanel boardPanel;
-    private BoardView boardView;
 
     private JPanel gameControls;
 
@@ -25,19 +27,19 @@ public class ColorFloodView extends JFrame {
 
 
 
-    public ColorFloodView() {
+    protected ColorFloodView() {
         //game view setup
         initializeGamePanel();
 
-        //setUpTimerPanel();
+        setUpTimerPanel();
 
         setUpBoardPanel();
 
         setUpControlPanel();
 
-        //panel.add(timerPanel, BoarderLayout.NORTH);
-        //panel.add(boardPanel, BorderLayout.CENTER);
-        panel.add(gameControls);
+        panel.add(timerPanel, BorderLayout.NORTH);
+        panel.add(boardPanel, BorderLayout.CENTER);
+        panel.add(gameControls, BorderLayout.SOUTH);
 
         add(panel);
     }
@@ -45,14 +47,57 @@ public class ColorFloodView extends JFrame {
     private void initializeGamePanel() {
         panel = new JPanel();
         setTitle("Color Flood");
-        setSize(300, 550);
+        setSize(300, 400);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel.setLayout(new GridLayout());
-        panel.setBackground(BoardProperties.BACKGROUND_COLOR);
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Properties.BACKGROUND_COLOR);
 
         panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
     }
+
+
+    private void setUpTimerPanel() {
+        timerPanel = new JPanel();
+        timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
+        timerPanel.setMinimumSize(Properties.TIMER_PANEL_SIZE);
+        timerPanel.setBackground(Properties.BACKGROUND_COLOR);
+        timerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+        timerPanel.setBorder(new LineBorder(Color.WHITE));
+    }
+
+
+    private void setUpBoardPanel() {
+        boardPanel = new JPanel();
+
+        String difficulty = preGameQuery();
+        BoardView boardView = new BoardView(difficulty);
+
+        boardPanel.setBorder(new LineBorder(Color.WHITE));
+        boardPanel.setBackground(Properties.BACKGROUND_COLOR);
+        boardPanel.setPreferredSize(Properties.BOARD_SIZE);
+        boardPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+        boardPanel.add(boardView);
+    }
+
+    private String preGameQuery() {
+
+        String userInput = (String) JOptionPane.showInputDialog(
+                null,
+                "Please select the level of difficulty for the game. " +
+                        "\n If you do not answer, the difficulty will be set for you. ",
+                "Pre-Game Query", JOptionPane.QUESTION_MESSAGE,
+                null,
+                Properties.DIFFICULTY, // Array of choices
+                Properties.DIFFICULTY[0]); // Initial choice
+
+        if((userInput != null) && (userInput.length() > 0)) {
+            return userInput;
+        }
+        return Properties.DIFFICULTY[2];
+    }
+
+
 
     private void setUpControlPanel() {
 
@@ -64,9 +109,9 @@ public class ColorFloodView extends JFrame {
     private void initializeControlPanel() {
         gameControls = new JPanel();
         gameControls.setLayout(new BoxLayout(gameControls, BoxLayout.X_AXIS));
-        gameControls.setBackground(BoardProperties.BACKGROUND_COLOR);
-        gameControls.setSize(BoardProperties.COLOR_BUTTON_HEIGHT, BoardProperties.COLOR_BUTTON_HEIGHT);
-
+        gameControls.setBackground(Properties.BACKGROUND_COLOR);
+        gameControls.setSize(Properties.COLOR_BUTTON_HEIGHT, Properties.COLOR_BUTTON_HEIGHT);
+        gameControls.setBorder(new EmptyBorder(10, 0, 10, 0));
 
     }
 
@@ -75,11 +120,11 @@ public class ColorFloodView extends JFrame {
         for(int current = 0; current < colorButtons.length; current++) {
             JButton newButton = new JButton();
 
-            newButton.setPreferredSize(BoardProperties.COLOR_BUTTON_SIZE);
-            newButton.setIcon(BoardProperties.createImageIcon(
-                    BoardProperties.COLORS[current],
-                    BoardProperties.COLOR_BUTTON_HEIGHT,
-                    BoardProperties.COLOR_BUTTON_WIDTH));
+            newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+            newButton.setIcon(Properties.createImageIcon(
+                    Properties.COLORS[current],
+                    Properties.COLOR_BUTTON_HEIGHT,
+                    Properties.COLOR_BUTTON_WIDTH));
 
             colorButtons[current] = newButton;
             gameControls.add(colorButtons[current]);
@@ -100,33 +145,6 @@ public class ColorFloodView extends JFrame {
             button.setEnabled(clickable);
         }
     }
-
-
-
-    private void setUpBoardPanel() {
-        String difficulty = preGameQuery();
-        boardView = new BoardView(difficulty);
-        boardView.setBackground(BoardProperties.BACKGROUND_COLOR);
-    }
-
-    private String preGameQuery() {
-
-        String userInput = (String) JOptionPane.showInputDialog(
-                null,
-                "Please select the level of difficulty for the game. " +
-                        "\n If you do not answer, the difficulty will be set for you. ",
-                "Pre-Game Query", JOptionPane.QUESTION_MESSAGE,
-                null,
-                BoardProperties.DIFFICULTY, // Array of choices
-                BoardProperties.DIFFICULTY[0]); // Initial choice
-
-        if((userInput != null) && (userInput.length() > 0)) {
-            return userInput;
-        }
-        return BoardProperties.DIFFICULTY[2];
-    }
-
-
 
 
 

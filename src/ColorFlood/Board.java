@@ -33,8 +33,8 @@ public class Board {
         gameBoard = new Cell[GAME_COLUMNS][GAME_ROWS];
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
-                cellColor = random.nextInt(BoardProperties.COLORS.length - 1);
-                Cell cell = new Cell(col, row, BoardProperties.COLORS[cellColor]);
+                cellColor = random.nextInt(Properties.COLORS.length - 1);
+                gameBoard[row][col] = new Cell(col, row, Properties.COLORS[cellColor]);
             }
         }
     }

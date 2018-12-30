@@ -2,16 +2,16 @@ package ColorFlood.GUI;
 
 
 import ColorFlood.Board;
-import ColorFlood.BoardProperties;
+import ColorFlood.Properties;
 import ColorFlood.Cell;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static ColorFlood.BoardProperties.*;
+import static ColorFlood.Properties.*;
 
-public class BoardView extends JPanel {
+public class BoardView extends JComponent {
 
     private Board board;
 
@@ -25,6 +25,7 @@ public class BoardView extends JPanel {
     public BoardView(String difficulty) {
 
         this.difficulty = difficulty;
+
 
         setUpBoard();
 
@@ -68,43 +69,37 @@ public class BoardView extends JPanel {
 
         setUpColRowSizes();
 
-        paintBackground(g);
+    //    paintBackground(g);
 
         paintGrid(g);
     }
 
     private void paintBackground(Graphics2D g) {
-        setBackground(BoardProperties.BACKGROUND_COLOR);
+        setBackground(Properties.BACKGROUND_COLOR);
         setOpaque(true);
     }
 
 
     private void paintGrid(Graphics2D g) {
-//        BasicStroke bs = new BasicStroke(3, 1, BasicStroke.CAP_ROUND);
-//        g.setStroke(bs);
-//
-//        Cell cell;
-//
-//        for (int r = 0; r < board.GAME_ROWS; r++) {
-//            for (int c = 0; c < board.GAME_COLUMNS; c++) {
-//                cell = board.getGameBoard()[r][c];
-//
-//                g.setColor(cell.getColor());
-//
-//                g.fillRoundRect((int)(c * boardColWidth + 7),
-//                        (int)(r * boardRowHeight + 7),
-//                        (int) (boardColWidth / 1.3),
-//                        (int) (boardRowHeight / 1.3),
-//                        10,
-//                        10);
 
-//                g.fillRect((int)(c * boardColWidth + 7),
-//                        (int)(r * boardRowHeight + 7),
-//                        (int) (boardColWidth / 1.3),
-//                        (int) (boardRowHeight / 1.3));
+        BasicStroke bs = new BasicStroke(3, 1, BasicStroke.CAP_ROUND);
+        g.setStroke(bs);
+
+        Cell cell;
+
+        for (int r = 0; r < board.GAME_ROWS; r++)
+            for (int c = 0; c < board.GAME_COLUMNS; c++) {
+                cell = board.getGameBoard()[r][c];
+
+                g.setColor(cell.getColor());
+                g.fillRoundRect((int)(c * boardColWidth + 7),
+                        (int)(r * boardRowHeight + 7),
+                        (int) (boardColWidth / 1.3),
+                        (int) (boardRowHeight / 1.3),
+                        10,
+                        10);
+
             }
-
-        }
     }
 
 }

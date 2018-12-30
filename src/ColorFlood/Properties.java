@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BoardProperties {
+public class Properties {
 
     public static final Color BACKGROUND_COLOR = Color.BLACK;
 
@@ -33,9 +33,20 @@ public class BoardProperties {
     public static final int GAME_COLUMNS_HARD = 20;
     public static final int GAME_ROWS_HARD = 20;
 
+
+
+    public static final int TIMER_PANEL_HEIGHT = 300;
+    public static final int TIMER_PANEL_WIDTH = 50;
+    public static final Dimension TIMER_PANEL_SIZE = new Dimension(TIMER_PANEL_HEIGHT, TIMER_PANEL_WIDTH);
+
     public static final int COLOR_BUTTON_HEIGHT = 40;
     public static final int COLOR_BUTTON_WIDTH = 40;
-    public static final Dimension COLOR_BUTTON_SIZE = new Dimension(10, 40);
+    public static final Dimension COLOR_BUTTON_SIZE = new Dimension(COLOR_BUTTON_HEIGHT, COLOR_BUTTON_WIDTH);
+
+    public static final int BOARD_HEIGHT = 300;
+    public static final int BOARD_WIDTH = 300;
+    public static final Dimension BOARD_SIZE = new Dimension(BOARD_HEIGHT, BOARD_WIDTH);
+
 
     public static ImageIcon createImageIcon(Color color, int width, int height) {
         BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
