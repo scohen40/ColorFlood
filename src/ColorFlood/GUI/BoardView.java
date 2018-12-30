@@ -63,8 +63,8 @@ public class BoardView extends JComponent {
 
     private void paintGrid(Graphics2D g) {
 
-        BasicStroke bs = new BasicStroke(3, 1, BasicStroke.CAP_ROUND);
-        g.setStroke(bs);
+//        BasicStroke bs = new BasicStroke(3, 1, BasicStroke.CAP_ROUND);
+//        g.setStroke(bs);
 
         Cell cell;
 
@@ -72,11 +72,19 @@ public class BoardView extends JComponent {
             for (int c = 0; c < board.GAME_COLUMNS; c++) {
                 cell = board.getGameBoard()[r][c];
 
+//                g.setColor(Color.BLACK);
+//                g.drawRoundRect((int)(r * boardRowHeight + 3),
+//                        (int)(c * boardColWidth + 3),
+//                        (int) (boardRowHeight/1.5),
+//                        (int) (boardColWidth/1.5),
+//                        10,
+//                        10);
+
                 g.setColor(cell.getColor());
-                g.fillRoundRect((int)(r * boardRowHeight + 23),
-                        (int)(c * boardColWidth),
-                        (int) (boardRowHeight / 1.3),
-                        (int) (boardColWidth / 1.3),
+                g.fillRoundRect((int)(r * boardRowHeight + 3),
+                        (int)(c * boardColWidth + 3),
+                        (int) (boardRowHeight/1.5),
+                        (int) (boardColWidth/1.5),
                         10,
                         10);
 

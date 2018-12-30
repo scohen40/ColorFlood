@@ -69,7 +69,7 @@ public class ColorFloodView extends JFrame {
         String difficulty = preGameQuery();
         boardView = new BoardView(difficulty);
         boardView.setPreferredSize(Properties.BOARD_VIEW_SIZE);
-       // boardView.setBorder(new EmptyBorder(10, 0, 10, 0));
+        boardView.setBorder(new EmptyBorder(50, 10, 0, 10));
     }
 
     private String preGameQuery() {
