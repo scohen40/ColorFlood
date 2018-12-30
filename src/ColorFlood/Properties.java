@@ -43,9 +43,9 @@ public class Properties {
     public static final int COLOR_BUTTON_WIDTH = 40;
     public static final Dimension COLOR_BUTTON_SIZE = new Dimension(COLOR_BUTTON_HEIGHT, COLOR_BUTTON_WIDTH);
 
-    public static final int BOARD_HEIGHT = 300;
-    public static final int BOARD_WIDTH = 300;
-    public static final Dimension BOARD_SIZE = new Dimension(BOARD_HEIGHT, BOARD_WIDTH);
+    public static final int BOARD_VIEW_HEIGHT = 300;
+    public static final int BOARD_VIEW_WIDTH = 300;
+    public static final Dimension BOARD_VIEW_SIZE = new Dimension(BOARD_VIEW_HEIGHT, BOARD_VIEW_WIDTH);
 
 
     public static ImageIcon createImageIcon(Color color, int width, int height) {

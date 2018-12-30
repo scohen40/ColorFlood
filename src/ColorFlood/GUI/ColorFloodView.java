@@ -45,7 +45,7 @@ public class ColorFloodView extends JFrame {
     private void initializeGamePanel() {
         panel = new JPanel();
         setTitle("Color Flood");
-        setSize(300, 400);
+        setSize(500, 700);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setLayout(new BorderLayout());
@@ -68,7 +68,7 @@ public class ColorFloodView extends JFrame {
     private void setUpBoardView() {
         String difficulty = preGameQuery();
         boardView = new BoardView(difficulty);
-
+        boardView.setPreferredSize(Properties.BOARD_VIEW_SIZE);
        // boardView.setBorder(new EmptyBorder(10, 0, 10, 0));
     }
 
@@ -100,10 +100,9 @@ public class ColorFloodView extends JFrame {
 
     private void initializeControlPanel() {
         gameControls = new JPanel();
-        gameControls.setLayout(new BoxLayout(gameControls, BoxLayout.X_AXIS));
+        gameControls.setLayout(new GridLayout(1, 0));
         gameControls.setBackground(Properties.BACKGROUND_COLOR);
-        gameControls.setSize(Properties.COLOR_BUTTON_HEIGHT, Properties.COLOR_BUTTON_HEIGHT);
-        gameControls.setBorder(new EmptyBorder(10, 0, 10, 0));
+        gameControls.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
 
     }
 
@@ -117,6 +116,8 @@ public class ColorFloodView extends JFrame {
                     Properties.COLORS[current],
                     Properties.COLOR_BUTTON_HEIGHT,
                     Properties.COLOR_BUTTON_WIDTH));
+
+            newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
 
             colorButtons[current] = newButton;
             gameControls.add(colorButtons[current]);

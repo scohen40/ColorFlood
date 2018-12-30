@@ -26,24 +26,9 @@ public class BoardView extends JComponent {
 
         this.difficulty = difficulty;
 
-
-        setUpBoard();
-
-
-    }
-
-    private void setUpBoard() {
-
         setUpBoardDimensions();
-
-
-
     }
 
-    private void setUpColRowSizes() {
-        boardColWidth = this.getWidth() / (double) board.GAME_COLUMNS;
-        boardRowHeight = this.getHeight() / (double) board.GAME_ROWS;
-    }
 
     private void setUpBoardDimensions() {
         if(difficulty == DIFFICULTY[0]) {
@@ -71,7 +56,10 @@ public class BoardView extends JComponent {
     }
 
 
-
+    private void setUpColRowSizes() {
+        boardColWidth = this.getWidth() / (double) board.GAME_COLUMNS;
+        boardRowHeight = this.getWidth() / (double) board.GAME_ROWS;
+    }
 
     private void paintGrid(Graphics2D g) {
 
@@ -86,7 +74,7 @@ public class BoardView extends JComponent {
 
                 g.setColor(cell.getColor());
                 g.fillRoundRect((int)(r * boardRowHeight + 23),
-                        (int)(c * boardColWidth + 3),
+                        (int)(c * boardColWidth),
                         (int) (boardRowHeight / 1.3),
                         (int) (boardColWidth / 1.3),
                         10,
