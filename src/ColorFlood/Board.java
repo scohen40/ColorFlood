@@ -7,8 +7,8 @@ public class Board {
 
     private Cell[][] gameBoard;
 
-    private final int gameColumns;
-    private final int gameRows;
+    public final int GAME_COLUMNS;
+    public final int GAME_ROWS;
 
     private Color selectedColor;
 
@@ -17,12 +17,12 @@ public class Board {
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
      *
-     * @param gameColumns
-     * @param gameRows
+     * @param GAME_COLUMNS
+     * @param GAME_ROWS
      */
-    public Board(int gameColumns, int gameRows) {
-        this.gameColumns = gameColumns;
-        this.gameRows = gameRows;
+    public Board(int GAME_COLUMNS, int GAME_ROWS) {
+        this.GAME_COLUMNS = GAME_COLUMNS;
+        this.GAME_ROWS = GAME_ROWS;
 
         createGameBoard();
     }
@@ -30,9 +30,9 @@ public class Board {
     private void createGameBoard() {
         Random random = new Random();
         int cellColor;
-        gameBoard = new Cell[gameColumns][gameRows];
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
+        gameBoard = new Cell[GAME_COLUMNS][GAME_ROWS];
+        for (int col = 0; col < GAME_COLUMNS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
                 cellColor = random.nextInt(BoardProperties.COLORS.length - 1);
                 Cell cell = new Cell(col, row, BoardProperties.COLORS[cellColor]);
             }
@@ -54,8 +54,8 @@ public class Board {
 
     private void activateNeighbors() {
         //ArrayList<Cell> neighbors = new ArrayList<>();
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
+        for (int col = 0; col < GAME_COLUMNS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
                     //check for neighbors of search color and activate
@@ -103,13 +103,13 @@ public class Board {
     }
 
     private boolean boardContains(int col, int row) {
-        return (col < gameColumns) && (row < gameRows) && (col >= 0) && (row >= 0);
+        return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
 
     }
 
     private void colorActiveCells(Color color) {
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
+        for (int col = 0; col < GAME_COLUMNS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
                     cell.setColor(color);
@@ -124,11 +124,16 @@ public class Board {
     }
 
     private boolean gameOver() {
-        return (gameColumns * gameRows) == activeCells || timesUp();
+        return (GAME_COLUMNS * GAME_ROWS) == activeCells || timesUp();
     }
 
     private boolean timesUp() {
         //if timer = 0
         return false;
     }
+
+    public Cell[][] getGameBoard() {
+        return gameBoard;
+    }
+
 }
