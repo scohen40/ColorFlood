@@ -91,7 +91,7 @@ public class Board {
         //return activatedNeighbors;
     }
 
-    private void setCellActive(int col, int row) {
+    public void setCellActive(int col, int row) {
         if (boardContains(col, row)) {
             if (!gameBoard[col][row].isActive()) {
                 if (gameBoard[col][row].getColor() == selectedColor) {
@@ -118,17 +118,18 @@ public class Board {
         }
     }
 
-    public void flood(Color color) {
+    public void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor); //call here or in repaint?
     }
 
-    private boolean gameOver() {
+    public boolean gameOver() {
         return (gameColumns * gameRows) == activeCells || timesUp();
     }
 
-    private boolean timesUp() {
+    public boolean timesUp() {
         //if timer = 0
-        return false;
+        return true;
+        //else return false (as long as timer isn't up
     }
 }
