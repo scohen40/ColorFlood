@@ -134,4 +134,11 @@ public class Board {
         return gameTimer.getRemainingTime() == 0;
     }
 
+    private void endGame(){
+        if (gameOver()){
+            gameTimer.cancelTimer();
+        }
+        //do the other stuff
+    }
+
 }

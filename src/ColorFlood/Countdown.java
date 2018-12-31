@@ -32,4 +32,8 @@ public class Countdown {
         int sec = remainingTime % 60_000/1000 ;
         return String.format("%02d:%02d", min, sec);
     }
+
+    public void cancelTimer(){
+        timer.cancel();
+    }
 }
