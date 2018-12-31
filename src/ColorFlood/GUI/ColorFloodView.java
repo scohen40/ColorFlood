@@ -14,12 +14,12 @@ public class ColorFloodView extends JFrame {
     private BoardView boardView;
     private JPanel gameControls;
 
-    private JButton buttonRed;
-    private JButton buttonCyan;
-    private JButton buttonYellow;
-    private JButton buttonGreen;
-    private JButton buttonBlue;
-    private JButton buttonMagenta;
+    private JButton buttonRed = new JButton();
+    private JButton buttonCyan = new JButton();
+    private JButton buttonYellow = new JButton();
+    private JButton buttonGreen = new JButton();
+    private JButton buttonBlue = new JButton();
+    private JButton buttonMagenta = new JButton();
 
     private JButton[] colorButtons = { buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
 
@@ -104,7 +104,6 @@ public class ColorFloodView extends JFrame {
         for(int current = 0; current < colorButtons.length; current++) {
             JButton newButton = new JButton();
 
-
             newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             newButton.setIcon(Properties.createImageIcon(
                     Properties.COLORS[current],
@@ -112,7 +111,6 @@ public class ColorFloodView extends JFrame {
                     Properties.COLOR_BUTTON_HEIGHT));
 
             newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
-
 
             colorButtons[current] = newButton;
             gameControls.add(colorButtons[current]);
@@ -124,7 +122,17 @@ public class ColorFloodView extends JFrame {
     }
 
     private void addColorControlButtonsListeners() {
-        //to do
+        buttonRed.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.RED));
+
+        buttonCyan.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.CYAN));
+
+        buttonYellow.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.YELLOW));
+
+        buttonGreen.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.GREEN));
+
+        buttonBlue.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.BLUE));
+
+        buttonMagenta.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.MAGENTA));
     }
 
     private void toggleColorControlButtons(Boolean clickable) {

@@ -12,10 +12,8 @@ import static ColorFlood.Properties.*;
 
 public class BoardView extends JComponent {
 
-    private Board board;
-
+    public Board board;
     private String difficulty;
-
     private double boardColWidth;
     private double boardRowHeight;
 
