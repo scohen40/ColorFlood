@@ -40,6 +40,10 @@ public class Board {
         }
     }
 
+    public Cell[][] getGameBoard() {
+        return gameBoard;
+    }
+
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
         this.selectedColor = selectedColor;
@@ -47,8 +51,8 @@ public class Board {
 
     private void activateNeighbors() {
         //ArrayList<Cell> neighbors = new ArrayList<>();
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
+        for (int col = 0; col < GAME_COLUMNS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
                     //check for neighbors of search color and activate
@@ -96,13 +100,13 @@ public class Board {
     }
 
     private boolean boardContains(int col, int row) {
-        return (col < gameColumns) && (row < gameRows) && (col >= 0) && (row >= 0);
+        return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
 
     }
 
     private void colorActiveCells(Color color) {
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
+        for (int col = 0; col < GAME_COLUMNS; col++) {
+            for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
                     cell.setColor(color);
@@ -117,7 +121,7 @@ public class Board {
     }
 
     public boolean gameOver() {
-        return (gameColumns * gameRows) == activeCells || timesUp();
+        return (GAME_COLUMNS * GAME_ROWS) == activeCells || timesUp();
     }
 
     public boolean timesUp() {

@@ -62,9 +62,9 @@ public class BoardView extends JComponent {
 
         Cell cell;
 
-        for (int r = 0; r < board.GAME_ROWS; r++) {
-            for (int c = 0; c < board.GAME_COLUMNS; c++) {
-                cell = board.getGameBoard()[r][c];
+        for (int c = 0; c < board.GAME_COLUMNS; c++){
+            for (int r = 0; r < board.GAME_ROWS; r++) {
+                cell = board.getGameBoard()[c][r];
 
                 g.setColor(cell.getColor());
                 g.fillRoundRect(

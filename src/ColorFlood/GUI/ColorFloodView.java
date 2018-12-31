@@ -15,13 +15,13 @@ public class ColorFloodView extends JFrame {
     private JPanel gameControls;
 
     private JButton buttonRed;
-    private JButton buttonOrange;
+    private JButton buttonCyan;
     private JButton buttonYellow;
     private JButton buttonGreen;
     private JButton buttonBlue;
     private JButton buttonMagenta;
 
-    private JButton[] colorButtons = { buttonRed, buttonOrange, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
+    private JButton[] colorButtons = { buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
 
 
 
@@ -77,7 +77,7 @@ public class ColorFloodView extends JFrame {
                 null,
                 "Please select the level of difficulty for the game. " +
                         "\n If you do not answer, the difficulty will be set for you. ",
-                "Pre-Game Query", JOptionPane.QUESTION_MESSAGE,
+                "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
