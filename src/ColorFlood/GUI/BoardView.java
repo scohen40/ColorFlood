@@ -6,11 +6,13 @@ import ColorFlood.Cell;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import static ColorFlood.Properties.*;
 
-public class BoardView extends JComponent {
+public class BoardView extends JComponent implements MouseListener {
 
     private Board board;
 
@@ -41,6 +43,9 @@ public class BoardView extends JComponent {
         }
     }
 
+    public Board getBoard() {
+        return board;
+    }
 
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -79,4 +84,28 @@ public class BoardView extends JComponent {
         }
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        board.getGameTimer().runTimer();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

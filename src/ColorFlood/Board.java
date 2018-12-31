@@ -14,6 +14,8 @@ public class Board {
 
     private int activeCells;
 
+    private Countdown gameTimer = new Countdown();
+
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
      *
@@ -42,6 +44,10 @@ public class Board {
 
     public Cell[][] getGameBoard() {
         return gameBoard;
+    }
+
+    public Countdown getGameTimer() {
+        return gameTimer;
     }
 
     public void setSelectedColor(Color selectedColor) {
@@ -125,9 +131,7 @@ public class Board {
     }
 
     public boolean timesUp() {
-        //if timer = 0
-        return true;
-        //else return false (as long as timer isn't up
+        return gameTimer.getRemainingTime() == 0;
     }
 
 }
