@@ -50,13 +50,10 @@ public class Board {
     }
 
     private void activateNeighbors() {
-        //ArrayList<Cell> neighbors = new ArrayList<>();
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
-                    //check for neighbors of search color and activate
-                    //iterate active cells
                     neighborsToActivate(cell);
                 }
             }
@@ -90,7 +87,6 @@ public class Board {
 
     private boolean boardContains(int col, int row) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
-
     }
 
     private void colorActiveCells(Color color) {
