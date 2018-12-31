@@ -45,23 +45,22 @@ public class ColorFloodView extends JFrame {
     private void initializeGamePanel() {
         panel = new JPanel();
         setTitle("Color Flood");
-        setSize(500, 700);
+        setSize(Properties.MAIN_PANEL_WIDTH, Properties.MAIN_PANEL_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
 
     private void setUpTimerPanel() {
         timerPanel = new JPanel();
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
-        timerPanel.setMinimumSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
-        timerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
-        timerPanel.setBorder(new LineBorder(Color.WHITE));
+        timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
     }
 
 
@@ -69,7 +68,7 @@ public class ColorFloodView extends JFrame {
         String difficulty = preGameQuery();
         boardView = new BoardView(difficulty);
         boardView.setPreferredSize(Properties.BOARD_VIEW_SIZE);
-        boardView.setBorder(new EmptyBorder(50, 10, 0, 10));
+        boardView.setBorder(new EmptyBorder(20, 10, 0, 0));
     }
 
     private String preGameQuery() {
@@ -88,7 +87,6 @@ public class ColorFloodView extends JFrame {
         }
         return Properties.DIFFICULTY[2];
     }
-
 
 
     private void setUpControlPanel() {
@@ -111,13 +109,15 @@ public class ColorFloodView extends JFrame {
         for(int current = 0; current < colorButtons.length; current++) {
             JButton newButton = new JButton();
 
+
             newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             newButton.setIcon(Properties.createImageIcon(
                     Properties.COLORS[current],
-                    Properties.COLOR_BUTTON_HEIGHT,
-                    Properties.COLOR_BUTTON_WIDTH));
+                    Properties.COLOR_BUTTON_WIDTH,
+                    Properties.COLOR_BUTTON_HEIGHT));
 
             newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
+
 
             colorButtons[current] = newButton;
             gameControls.add(colorButtons[current]);

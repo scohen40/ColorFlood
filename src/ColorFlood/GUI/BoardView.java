@@ -2,7 +2,6 @@ package ColorFlood.GUI;
 
 
 import ColorFlood.Board;
-import ColorFlood.Properties;
 import ColorFlood.Cell;
 
 import javax.swing.*;
@@ -31,18 +30,16 @@ public class BoardView extends JComponent {
 
 
     private void setUpBoardDimensions() {
-        if(difficulty == DIFFICULTY[0]) {
+        if(difficulty.equals(DIFFICULTY[0])) {
             board = new Board(GAME_COLUMNS_EASY, GAME_ROWS_EASY);
         }
-        else if(difficulty == DIFFICULTY[1]) {
+        else if(difficulty.equals(DIFFICULTY[1])) {
             board = new Board(GAME_COLUMNS_MEDIUM, GAME_ROWS_MEDIUM);
         }
-        else if(difficulty == DIFFICULTY[2]) {
+        else if(difficulty.equals(DIFFICULTY[2])) {
             board = new Board(GAME_COLUMNS_HARD, GAME_ROWS_HARD);
         }
     }
-
-
 
 
     protected void paintComponent(Graphics graphics) {
@@ -63,32 +60,23 @@ public class BoardView extends JComponent {
 
     private void paintGrid(Graphics2D g) {
 
-//        BasicStroke bs = new BasicStroke(3, 1, BasicStroke.CAP_ROUND);
-//        g.setStroke(bs);
-
         Cell cell;
 
-        for (int r = 0; r < board.GAME_ROWS; r++)
+        for (int r = 0; r < board.GAME_ROWS; r++) {
             for (int c = 0; c < board.GAME_COLUMNS; c++) {
                 cell = board.getGameBoard()[r][c];
 
-//                g.setColor(Color.BLACK);
-//                g.drawRoundRect((int)(r * boardRowHeight + 3),
-//                        (int)(c * boardColWidth + 3),
-//                        (int) (boardRowHeight/1.5),
-//                        (int) (boardColWidth/1.5),
-//                        10,
-//                        10);
-
                 g.setColor(cell.getColor());
-                g.fillRoundRect((int)(r * boardRowHeight + 3),
-                        (int)(c * boardColWidth + 3),
-                        (int) (boardRowHeight/1.5),
-                        (int) (boardColWidth/1.5),
+                g.fillRoundRect(
+                        (int) (c * boardColWidth + 8),
+                        (int) (r * boardRowHeight + 3),
+                        (int) (boardRowHeight / 1.5),
+                        (int) (boardColWidth / 1.5),
                         10,
                         10);
 
             }
+        }
     }
 
 }
