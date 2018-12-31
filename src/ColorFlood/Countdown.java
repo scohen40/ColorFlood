@@ -14,13 +14,15 @@ public class Countdown {
     }
 
     public void runTimer() {
-        TimerTask decrement = new TimerTask() {
-            @Override
-            public void run() {
-                remainingTime = remainingTime - 1000;
-            }
-        };
-        timer.schedule(decrement, 50, 1000);
+        if (remainingTime > 0) {
+            TimerTask decrement = new TimerTask() {
+                @Override
+                public void run() {
+                    remainingTime = remainingTime - 1000;
+                }
+            };
+            timer.schedule(decrement, 50, 1000);
+        }
     }
 
     public int getRemainingTime() {
@@ -29,11 +31,11 @@ public class Countdown {
 
     public String getRemainingTimeString() {
         int min = remainingTime / 60_000;
-        int sec = remainingTime % 60_000/1000 ;
+        int sec = remainingTime % 60_000 / 1000;
         return String.format("%02d:%02d", min, sec);
     }
 
-    public void cancelTimer(){
+    public void cancelTimer() {
         timer.cancel();
     }
 }

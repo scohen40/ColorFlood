@@ -86,12 +86,12 @@ public class BoardView extends JComponent implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        board.getGameTimer().runTimer();
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        board.getGameTimer().runTimer();
     }
 
     @Override
