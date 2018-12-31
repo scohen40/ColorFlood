@@ -23,8 +23,6 @@ public class ColorFloodView extends JFrame {
 
     private JButton[] colorButtons = { buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
 
-
-
     protected ColorFloodView() {
 
         initializeGamePanel();
@@ -55,14 +53,12 @@ public class ColorFloodView extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
-
     private void setUpTimerPanel() {
         timerPanel = new JPanel();
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
     }
-
 
     private void setUpBoardView() {
         String difficulty = preGameQuery();
@@ -87,7 +83,6 @@ public class ColorFloodView extends JFrame {
         }
         return Properties.DIFFICULTY[2];
     }
-
 
     private void setUpControlPanel() {
 
@@ -123,7 +118,6 @@ public class ColorFloodView extends JFrame {
             gameControls.add(colorButtons[current]);
         }
 
-
         addColorControlButtonsListeners();
 
         //toggleColorControlButtons(false);
@@ -138,9 +132,6 @@ public class ColorFloodView extends JFrame {
             button.setEnabled(clickable);
         }
     }
-
-
-
 
     public static void main(String[] args) {
         new ColorFloodView().setVisible(true);

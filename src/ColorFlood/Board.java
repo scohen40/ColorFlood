@@ -58,21 +58,12 @@ public class Board {
                     //check for neighbors of search color and activate
                     //iterate active cells
                     neighborsToActivate(cell);
-                    //neighbors.addAll(neighborsToActivate(cell));
                 }
             }
         }
-        /*//set active after finding all cells that are active when user clicked
-        for (Cell neighbor : neighbors)
-        {
-            neighbor.setActive(true);
-            activeCells++;
-        }*/ //set active in neighborstoactivate because then it will keep checking for same colored blocks
     }
 
     private void neighborsToActivate(Cell cell) {
-        //ArrayList<Cell> activatedNeighbors = new ArrayList<>();
-
         //top
         setCellActive(cell.getCol(), cell.getRow() - 1);
 
@@ -84,8 +75,6 @@ public class Board {
 
         //right
         setCellActive(cell.getCol() + 1, cell.getRow());
-
-        //return activatedNeighbors;
     }
 
     public void setCellActive(int col, int row) {
@@ -129,5 +118,4 @@ public class Board {
         return true;
         //else return false (as long as timer isn't up
     }
-
 }

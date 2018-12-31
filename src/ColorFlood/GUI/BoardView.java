@@ -28,7 +28,6 @@ public class BoardView extends JComponent {
         setUpBoardDimensions();
     }
 
-
     private void setUpBoardDimensions() {
         if(difficulty.equals(DIFFICULTY[0])) {
             board = new Board(GAME_COLUMNS_EASY, GAME_ROWS_EASY);
@@ -41,7 +40,6 @@ public class BoardView extends JComponent {
         }
     }
 
-
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
@@ -51,7 +49,6 @@ public class BoardView extends JComponent {
 
         paintGrid(g);
     }
-
 
     private void setUpColRowSizes() {
         boardColWidth = this.getWidth() / (double) board.GAME_COLUMNS;
@@ -78,5 +75,4 @@ public class BoardView extends JComponent {
             }
         }
     }
-
 }
