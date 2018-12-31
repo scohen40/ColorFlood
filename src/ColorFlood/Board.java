@@ -7,8 +7,8 @@ public class Board {
 
     public Cell[][] gameBoard;
 
-    private final int gameColumns;
-    private final int gameRows;
+    public final int GAME_ROWS;
+    public final int GAME_COLUMNS;
 
     public Color selectedColor;
 
@@ -17,12 +17,12 @@ public class Board {
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
      *
-     * @param gameColumns
-     * @param gameRows
+     * @param GAME_COLUMNS
+     * @param GAME_ROWS
      */
-    public Board(int gameColumns, int gameRows) {
-        this.gameColumns = gameColumns;
-        this.gameRows = gameRows;
+    public Board(int GAME_ROWS, int GAME_COLUMNS) {
+        this.GAME_COLUMNS = GAME_COLUMNS;
+        this.GAME_ROWS = GAME_ROWS;
 
         createGameBoard();
     }
@@ -30,22 +30,15 @@ public class Board {
     private void createGameBoard() {
         Random random = new Random();
         int cellColor;
-        gameBoard = new Cell[gameColumns][gameRows];
-        for (int col = 0; col < gameColumns; col++) {
-            for (int row = 0; row < gameRows; row++) {
-                cellColor = random.nextInt(BoardProperties.COLORS.length - 1);
-                Cell cell = new Cell(col, row, BoardProperties.COLORS[cellColor]);
+        gameBoard = new Cell[GAME_COLUMNS][GAME_ROWS];
+        for (int row = 0; row < GAME_ROWS; row++) {
+            for (int col = 0; col < GAME_COLUMNS; col++) {
+                cellColor = random.nextInt(Properties.COLORS.length);
+                Cell newCell = new Cell(row, col, Properties.COLORS[cellColor]);
+                gameBoard[row][col] = newCell;
             }
         }
     }
-
-    private Cell startCell() {
-        //get start cell from user click
-        //mark active
-        //iterate active cells
-        return null;
-    }
-
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
@@ -132,4 +125,5 @@ public class Board {
         return true;
         //else return false (as long as timer isn't up
     }
+
 }
