@@ -6,11 +6,13 @@ import ColorFlood.Cell;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import static ColorFlood.Properties.*;
 
-public class BoardView extends JComponent {
+public class BoardView extends JComponent implements MouseListener {
 
     public Board board;
     private String difficulty;
@@ -36,6 +38,10 @@ public class BoardView extends JComponent {
         else if(difficulty.equals(DIFFICULTY[2])) {
             board = new Board(GAME_COLUMNS_HARD, GAME_ROWS_HARD);
         }
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     protected void paintComponent(Graphics graphics) {
@@ -72,5 +78,30 @@ public class BoardView extends JComponent {
 
             }
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        board.getGameTimer().runTimer();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

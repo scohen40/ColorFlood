@@ -3,10 +3,10 @@ package ColorFlood.GUI;
 import ColorFlood.Properties;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
@@ -27,9 +27,9 @@ public class ColorFloodView extends JFrame {
 
         initializeGamePanel();
 
-        setUpTimerPanel();
-
         setUpBoardView();
+
+        setUpTimerPanel();
 
         setUpControlPanel();
 
@@ -58,6 +58,12 @@ public class ColorFloodView extends JFrame {
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
+
+        String time = boardView.getBoard().getGameTimer().getRemainingTimeString();
+        JLabel clock = new JLabel(time);
+        clock.setForeground(Color.white);
+        clock.setFont(new Font("clock", Font.BOLD, 30));
+        timerPanel.add(clock);
     }
 
     private void setUpBoardView() {
@@ -141,7 +147,9 @@ public class ColorFloodView extends JFrame {
         }
     }
 
+
     public static void main(String[] args) {
         new ColorFloodView().setVisible(true);
     }
+
 }
