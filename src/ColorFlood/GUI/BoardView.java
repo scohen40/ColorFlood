@@ -21,9 +21,12 @@ public class BoardView extends JComponent implements MouseListener {
 
     private ArrayList<JButton> cellButtons;
 
+    private String time = "1:30";
+
     public BoardView(String difficulty) {
 
         this.difficulty = difficulty;
+        this.addMouseListener(this);
 
         setUpBoardDimensions();
     }
@@ -42,6 +45,10 @@ public class BoardView extends JComponent implements MouseListener {
 
     public Board getBoard() {
         return board;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     protected void paintComponent(Graphics graphics) {
@@ -88,6 +95,7 @@ public class BoardView extends JComponent implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         board.getGameTimer().runTimer();
+        time = board.getGameTimer().getRemainingTimeString();
     }
 
     @Override
