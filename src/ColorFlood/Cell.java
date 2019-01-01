@@ -15,9 +15,9 @@ public class Cell extends JPanel{
 
     private Color color;
 
-    public Cell(int row, int col, Color color) {
-        this.row = row;
+    public Cell(int col, int row, Color color) {
         this.col = col;
+        this.row = row;
 
         this.color = color;
     }
@@ -72,6 +72,4 @@ public class Cell extends JPanel{
     public void setColor(Color color) {
         this.color = color;
     }
-
-
 }
