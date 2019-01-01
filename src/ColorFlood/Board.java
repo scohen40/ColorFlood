@@ -131,11 +131,10 @@ public class Board extends JPanel {
                 cell.removeMouseListener(firstClickListener);
             }
         }
+
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+    
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
@@ -221,12 +220,14 @@ public class Board extends JPanel {
         return time == 0;
     }
 
+
     private void endGame(){
         if (gameOver()){
 
         }
         //do the other stuff
     }
+
 
     public Cell[][] getGameBoard() {
         return gameBoard;

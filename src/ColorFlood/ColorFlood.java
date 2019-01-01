@@ -3,8 +3,8 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+// import java.awt.event.MouseEvent;
+// import java.awt.event.MouseListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +18,7 @@ public class ColorFlood extends JFrame {
     private String time = gameTimer.getRemainingTimeString();
     private JLabel clock = new JLabel(time);
 
+
     private JButton buttonRed;
     private JButton buttonCyan;
     private JButton buttonYellow;
@@ -26,6 +27,7 @@ public class ColorFlood extends JFrame {
     private JButton buttonMagenta;
 
     private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
+
 
     protected ColorFlood() {
 
@@ -41,7 +43,9 @@ public class ColorFlood extends JFrame {
 
         add(panel);
 
+
         gameTimer.runTimer();
+
     }
 
     private void initializeGamePanel() {
@@ -67,7 +71,6 @@ public class ColorFlood extends JFrame {
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
         timerPanel.add(clock);
-
     }
 
 
@@ -89,7 +92,9 @@ public class ColorFlood extends JFrame {
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
 
-        if ((userInput != null) && (userInput.length() > 0)) {
+
+        if((userInput != null) && (userInput.length() > 0)) {
+
             return userInput;
         } else {
             return Properties.DIFFICULTY[2];
@@ -115,7 +120,9 @@ public class ColorFlood extends JFrame {
 
     private void setUpControlColorButtons() {
 
-        for (int current = 0; current < colorButtons.length; current++) {
+
+        for(int current = 0; current < colorButtons.length; current++) {
+
             JButton newButton = new JButton();
 
 
@@ -143,10 +150,13 @@ public class ColorFlood extends JFrame {
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
-        for (JButton button : colorButtons) {
+
+        for(JButton button : colorButtons) {
+
             button.setEnabled(clickable);
         }
     }
+
 
     public class Countdown {
         private final int INITIAL_TIME = 90_000;
@@ -188,6 +198,7 @@ public class ColorFlood extends JFrame {
             timer.cancel();
         }
     }
+
 
 
     public static void main(String[] args) {
