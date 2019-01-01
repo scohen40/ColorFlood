@@ -134,7 +134,9 @@ public class Board extends JPanel {
 
     }
 
-    
+    public void setTime(int time) {
+        this.time = time;
+    }
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked

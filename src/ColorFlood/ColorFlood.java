@@ -86,7 +86,7 @@ public class ColorFlood extends JFrame {
                 "Please select the level of difficulty for the game. " +
                         "\nIf you do not answer, the difficulty will be set for you. " +
                         "\n\nWhen you exit this window you must select the starting cell. " +
-                        "\nOnce you do, the game will start. Good luck!",
+                        "\nGood luck!",
                 "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
@@ -163,43 +163,33 @@ public class ColorFlood extends JFrame {
         private int remainingTime;
         private java.util.Timer timer;
 
-        public Countdown() {
+        Countdown() {
             this.timer = new Timer();
             remainingTime = INITIAL_TIME;
         }
 
-        public void runTimer() {
-            if (remainingTime > 0) {
+        void runTimer() {
                 TimerTask decrement = new TimerTask() {
                     @Override
                     public void run() {
+                        if(remainingTime >= 0){
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
-                        //board.getB().setTime(remainingTime);
-                    }
+                        //todo figure this out
+                        // board.setTime(remainingTime);
+                    }else {timer.cancel();}}
+
                 };
                 timer.schedule(decrement, 50, 1000);
-            } else {
-                cancelTimer();
-            }
         }
 
-        public int getRemainingTime() {
-            return remainingTime;
-        }
-
-        public String getRemainingTimeString() {
+        String getRemainingTimeString() {
             int min = remainingTime / 60_000;
             int sec = remainingTime % 60_000 / 1000;
             return String.format("%02d:%02d", min, sec);
         }
 
-        public void cancelTimer() {
-            timer.cancel();
-        }
     }
-
-
 
     public static void main(String[] args) {
         new ColorFlood().setVisible(true);
