@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
@@ -14,12 +16,16 @@ public class ColorFloodView extends JFrame {
     private BoardView boardView;
     private JPanel gameControls;
 
-    private JButton buttonRed = new JButton();
-    private JButton buttonCyan = new JButton();
-    private JButton buttonYellow = new JButton();
-    private JButton buttonGreen = new JButton();
-    private JButton buttonBlue = new JButton();
-    private JButton buttonMagenta = new JButton();
+    private Countdown gameTimer = new Countdown();
+    private String time = gameTimer.getRemainingTimeString();
+    private JLabel clock = new JLabel(time);
+
+    private JButton buttonRed;
+    private JButton buttonCyan;
+    private JButton buttonYellow;
+    private JButton buttonGreen;
+    private JButton buttonBlue;
+    private JButton buttonMagenta;
 
     private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
 
@@ -27,9 +33,9 @@ public class ColorFloodView extends JFrame {
 
         initializeGamePanel();
 
-        setUpBoardView();
-
         setUpTimerPanel();
+
+        setUpBoardView();
 
         setUpControlPanel();
 
@@ -38,6 +44,8 @@ public class ColorFloodView extends JFrame {
         panel.add(gameControls, BorderLayout.SOUTH);
 
         add(panel);
+
+        gameTimer.runTimer();
     }
 
     private void initializeGamePanel() {
@@ -53,18 +61,19 @@ public class ColorFloodView extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
+
     private void setUpTimerPanel() {
         timerPanel = new JPanel();
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
-        String time = boardView.getTime();
-        JLabel clock = new JLabel(time);
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
         timerPanel.add(clock);
+
     }
+
 
     private void setUpBoardView() {
         String difficulty = preGameQuery();
@@ -90,6 +99,7 @@ public class ColorFloodView extends JFrame {
         return Properties.DIFFICULTY[2];
     }
 
+
     private void setUpControlPanel() {
 
         initializeControlPanel();
@@ -110,6 +120,7 @@ public class ColorFloodView extends JFrame {
         for (int current = 0; current < colorButtons.length; current++) {
             JButton newButton = new JButton();
 
+
             newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             newButton.setIcon(Properties.createImageIcon(
                     Properties.COLORS[current],
@@ -118,9 +129,11 @@ public class ColorFloodView extends JFrame {
 
             newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
 
+
             colorButtons[current] = newButton;
             gameControls.add(colorButtons[current]);
         }
+
 
         addColorControlButtonsListeners();
 
@@ -128,22 +141,55 @@ public class ColorFloodView extends JFrame {
     }
 
     private void addColorControlButtonsListeners() {
-        buttonRed.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.RED));
-
-        buttonCyan.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.CYAN));
-
-        buttonYellow.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.YELLOW));
-
-        buttonGreen.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.GREEN));
-
-        buttonBlue.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.BLUE));
-
-        buttonMagenta.addActionListener(actionEvent -> boardView.board.setSelectedColor(Color.MAGENTA));
+        //to do
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
         for (JButton button : colorButtons) {
             button.setEnabled(clickable);
+        }
+    }
+
+    public class Countdown{
+        private final int INITIAL_TIME = 90_000;
+        private int remainingTime;
+        private java.util.Timer timer;
+
+        public Countdown() {
+            this.timer = new Timer();
+            remainingTime = INITIAL_TIME;
+        }
+
+        public void runTimer() {
+            if (remainingTime > 0) {
+                TimerTask decrement = new TimerTask() {
+                    @Override
+                    public void run() {
+                        time = getRemainingTimeString();
+                        remainingTime = remainingTime - 1000;
+                        boardView.getBoard().setTime(remainingTime);
+                        repaint();
+                    }
+                };
+                timer.schedule(decrement, 50, 1000);
+            } else {
+                cancelTimer();
+            }
+        }
+
+        public int getRemainingTime() {
+            return remainingTime;
+        }
+
+        public String getRemainingTimeString() {
+            int min = remainingTime / 60_000;
+            int sec = remainingTime % 60_000 / 1000;
+            System.out.printf("%02d:%02d", min, sec);
+            return String.format("%02d:%02d", min, sec);
+        }
+
+        public void cancelTimer() {
+            timer.cancel();
         }
     }
 

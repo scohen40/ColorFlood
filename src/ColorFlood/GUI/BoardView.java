@@ -14,14 +14,14 @@ import static ColorFlood.Properties.*;
 
 public class BoardView extends JComponent implements MouseListener {
 
-    public Board board;
+    private Board board;
+
     private String difficulty;
+
     private double boardColWidth;
     private double boardRowHeight;
 
     private ArrayList<JButton> cellButtons;
-
-    private String time = "1:30";
 
     public BoardView(String difficulty) {
 
@@ -30,6 +30,7 @@ public class BoardView extends JComponent implements MouseListener {
 
         setUpBoardDimensions();
     }
+
 
     private void setUpBoardDimensions() {
         if(difficulty.equals(DIFFICULTY[0])) {
@@ -47,10 +48,6 @@ public class BoardView extends JComponent implements MouseListener {
         return board;
     }
 
-    public String getTime() {
-        return time;
-    }
-
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
@@ -60,6 +57,7 @@ public class BoardView extends JComponent implements MouseListener {
 
         paintGrid(g);
     }
+
 
     private void setUpColRowSizes() {
         boardColWidth = this.getWidth() / (double) board.GAME_COLUMNS;
@@ -94,8 +92,7 @@ public class BoardView extends JComponent implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        board.getGameTimer().runTimer();
-        time = board.getGameTimer().getRemainingTimeString();
+
     }
 
     @Override

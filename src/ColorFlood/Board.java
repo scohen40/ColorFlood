@@ -14,7 +14,7 @@ public class Board {
 
     private int activeCells;
 
-    private Countdown gameTimer = new Countdown();
+    private int time;
 
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
@@ -46,8 +46,8 @@ public class Board {
         return gameBoard;
     }
 
-    public Countdown getGameTimer() {
-        return gameTimer;
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public void setSelectedColor(Color selectedColor) {
@@ -56,17 +56,29 @@ public class Board {
     }
 
     private void activateNeighbors() {
+        //ArrayList<Cell> neighbors = new ArrayList<>();
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
+                    //check for neighbors of search color and activate
+                    //iterate active cells
                     neighborsToActivate(cell);
+                    //neighbors.addAll(neighborsToActivate(cell));
                 }
             }
         }
+        /*//set active after finding all cells that are active when user clicked
+        for (Cell neighbor : neighbors)
+        {
+            neighbor.setActive(true);
+            activeCells++;
+        }*/ //set active in neighborstoactivate because then it will keep checking for same colored blocks
     }
 
     private void neighborsToActivate(Cell cell) {
+        //ArrayList<Cell> activatedNeighbors = new ArrayList<>();
+
         //top
         setCellActive(cell.getCol(), cell.getRow() - 1);
 
@@ -78,6 +90,8 @@ public class Board {
 
         //right
         setCellActive(cell.getCol() + 1, cell.getRow());
+
+        //return activatedNeighbors;
     }
 
     public void setCellActive(int col, int row) {
@@ -93,6 +107,7 @@ public class Board {
 
     private boolean boardContains(int col, int row) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
+
     }
 
     private void colorActiveCells(Color color) {
@@ -116,13 +131,14 @@ public class Board {
     }
 
     public boolean timesUp() {
-        return gameTimer.getRemainingTime() == 0;
+        return time == 0;
     }
 
     private void endGame(){
         if (gameOver()){
-            gameTimer.cancelTimer();
+
         }
         //do the other stuff
     }
+
 }
