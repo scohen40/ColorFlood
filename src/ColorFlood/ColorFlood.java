@@ -15,12 +15,11 @@ public class ColorFlood extends JFrame {
     private Board board;
     private JPanel controlsPanel;
 
-    private MouseListener firstClickListener;
-
     private Countdown gameTimer = new Countdown();
     private String time = gameTimer.getRemainingTimeString();
     private JLabel clock = new JLabel(time);
 
+    private MouseListener firstClickListener;
 
     private JButton buttonRed;
     private JButton buttonCyan;
@@ -28,8 +27,16 @@ public class ColorFlood extends JFrame {
     private JButton buttonGreen;
     private JButton buttonBlue;
     private JButton buttonMagenta;
-
-    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
+    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow,
+            buttonGreen, buttonBlue, buttonMagenta};
+    private MouseListener buttonRedListener;
+    private MouseListener buttonCyanListner;
+    private MouseListener buttonYellowListener;
+    private MouseListener buttonGreenListner;
+    private MouseListener buttonBlueListner;
+    private MouseListener buttonMagentaListener;
+    private MouseListener[] colorButtonListeners = {buttonRedListener, buttonCyanListner, buttonYellowListener,
+            buttonGreenListner, buttonBlueListner, buttonMagentaListener};
 
 
     protected ColorFlood() {
@@ -191,7 +198,6 @@ public class ColorFlood extends JFrame {
 
             JButton newButton = new JButton();
 
-
             newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             newButton.setIcon(Properties.createImageIcon(
                     Properties.COLORS[current],
@@ -212,7 +218,47 @@ public class ColorFlood extends JFrame {
     }
 
     private void addColorControlButtonsListeners() {
-        //to do
+        setUpColorControlButtonListeners();
+
+        for(JButton button : colorButtons) {
+            for(MouseListener colorButtonListener : colorButtonListeners) {
+                button.addMouseListener(colorButtonListener);
+            }
+        }
+    }
+
+    private void setUpColorControlButtonListeners() {
+        for(MouseListener colorButtonListener : colorButtonListeners) {
+            for(Color color : Properties.COLORS) {
+                colorButtonListener = new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        board.setSelectedColor(color);
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                };
+            }
+
+        }
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
