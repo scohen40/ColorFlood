@@ -95,8 +95,8 @@ public class SetCellActiveTest
 		board.gameBoard[2][2] = new Cell(2, 2, Color.BLUE);
 
 		//when
+		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
 		board.setSelectedColor(Color.YELLOW);
-		board.activateFirstCell(board.gameBoard[1][0].getCol(), board.gameBoard[1][0].getRow());
 		/*board.gameBoard[0][0].setActive(true);
 		board.gameBoard[1][0].setActive(true);
 		board.gameBoard[2][0].setActive(true);*/
