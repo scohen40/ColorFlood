@@ -3,23 +3,30 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+// import java.awt.event.MouseEvent;
+// import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ColorFlood extends JFrame {
     private JPanel panel;
-
     private JPanel timerPanel;
-
     private JPanel board;
-
     private JPanel controlsPanel;
+
+    private Countdown gameTimer = new Countdown();
+    private String time = gameTimer.getRemainingTimeString();
+    private JLabel clock = new JLabel(time);
+
+
     private JButton buttonRed;
     private JButton buttonCyan;
     private JButton buttonYellow;
     private JButton buttonGreen;
     private JButton buttonBlue;
     private JButton buttonMagenta;
-    private JButton[] colorButtons = { buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
 
+    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
 
 
     protected ColorFlood() {
@@ -35,6 +42,10 @@ public class ColorFlood extends JFrame {
         panel.add(controlsPanel, BorderLayout.SOUTH);
 
         add(panel);
+
+
+        gameTimer.runTimer();
+
     }
 
     private void initializeGamePanel() {
@@ -56,6 +67,10 @@ public class ColorFlood extends JFrame {
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
+
+        clock.setForeground(Color.white);
+        clock.setFont(new Font("clock", Font.BOLD, 30));
+        timerPanel.add(clock);
     }
 
 
@@ -77,7 +92,9 @@ public class ColorFlood extends JFrame {
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
 
+
         if((userInput != null) && (userInput.length() > 0)) {
+
             return userInput;
         } else {
             return Properties.DIFFICULTY[2];
@@ -103,7 +120,9 @@ public class ColorFlood extends JFrame {
 
     private void setUpControlColorButtons() {
 
+
         for(int current = 0; current < colorButtons.length; current++) {
+
             JButton newButton = new JButton();
 
 
@@ -131,15 +150,59 @@ public class ColorFlood extends JFrame {
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
+
         for(JButton button : colorButtons) {
+
             button.setEnabled(clickable);
         }
     }
 
+
+    public class Countdown {
+        private final int INITIAL_TIME = 90_000;
+        private int remainingTime;
+        private java.util.Timer timer;
+
+        public Countdown() {
+            this.timer = new Timer();
+            remainingTime = INITIAL_TIME;
+        }
+
+        public void runTimer() {
+            if (remainingTime > 0) {
+                TimerTask decrement = new TimerTask() {
+                    @Override
+                    public void run() {
+                        clock.setText(getRemainingTimeString());
+                        remainingTime = remainingTime - 1000;
+                        //board.getB().setTime(remainingTime);
+                    }
+                };
+                timer.schedule(decrement, 50, 1000);
+            } else {
+                cancelTimer();
+            }
+        }
+
+        public int getRemainingTime() {
+            return remainingTime;
+        }
+
+        public String getRemainingTimeString() {
+            int min = remainingTime / 60_000;
+            int sec = remainingTime % 60_000 / 1000;
+            return String.format("%02d:%02d", min, sec);
+        }
+
+        public void cancelTimer() {
+            timer.cancel();
+        }
+    }
 
 
 
     public static void main(String[] args) {
         new ColorFlood().setVisible(true);
     }
+
 }

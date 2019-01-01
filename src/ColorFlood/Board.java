@@ -23,6 +23,8 @@ public class Board extends JPanel {
 
     private int activeCells;
 
+    private int time;
+
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
      *
@@ -129,7 +131,10 @@ public class Board extends JPanel {
                 cell.removeMouseListener(firstClickListener);
             }
         }
+
     }
+
+    
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
@@ -212,10 +217,17 @@ public class Board extends JPanel {
     }
 
     public boolean timesUp() {
-        //if timer = 0
-        return true;
-        //else return false (as long as timer isn't up
+        return time == 0;
     }
+
+
+    private void endGame(){
+        if (gameOver()){
+
+        }
+        //do the other stuff
+    }
+
 
     public Cell[][] getGameBoard() {
         return gameBoard;
