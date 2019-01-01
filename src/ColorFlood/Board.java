@@ -3,6 +3,8 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 public class Board extends JPanel {
@@ -14,6 +16,8 @@ public class Board extends JPanel {
 
 //    public int rowHeight;
 //    public int columnWidth;
+
+    MouseListener firstClickListener;
 
     public Color selectedColor;
 
@@ -57,11 +61,11 @@ public class Board extends JPanel {
 
     private void setUpBoardPanel() {
         setLayout(new GridLayout(GAME_ROWS, GAME_COLUMNS));
-        //setPreferredSize(Properties.BOARD_TABLE_SIZE);
-        setBorder(new EmptyBorder(20, 10, 0, 0));
+        setBorder(new EmptyBorder(20, 10, 20, 10));
         setBackground(Properties.BACKGROUND_COLOR);
 
         addBoardPanelComponents();
+        addFirstClickListeners();
     }
 
     private void addBoardPanelComponents() {
@@ -72,10 +76,58 @@ public class Board extends JPanel {
         }
     }
 
+    private void addFirstClickListeners() {
+        setUpFirstClickListener();
 
-    public Cell[][] getGameBoard() {
-        return gameBoard;
+        for(Cell cellRow[] : gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.addMouseListener(firstClickListener);
+            }
+        }
     }
+
+
+    private void setUpFirstClickListener() {
+        firstClickListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Cell clickedCell = (Cell) e.getSource();
+
+                int row = clickedCell.getRow();
+                int col = clickedCell.getCol();
+
+                setCellActive(col, row);
+
+                System.out.println("clicked: " + e.getPoint() + " " + row + " " + col);
+
+                //removeFirstClickListener();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+//
+//    private void removeFirstClickListener() {
+//        this.removeMouseListener(firstClickListener);
+//    }
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
@@ -163,4 +215,11 @@ public class Board extends JPanel {
         //else return false (as long as timer isn't up
     }
 
+    public Cell[][] getGameBoard() {
+        return gameBoard;
+    }
+
+    public Color getSelectedColor() {
+        return selectedColor;
+    }
 }

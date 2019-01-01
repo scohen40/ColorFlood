@@ -1,13 +1,10 @@
-package ColorFlood.GUI;
-
-import ColorFlood.BoardBuilder;
-import ColorFlood.Properties;
+package ColorFlood;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class ColorFloodView extends JFrame {
+public class ColorFlood extends JFrame {
     private JPanel panel;
 
     private JPanel timerPanel;
@@ -25,7 +22,7 @@ public class ColorFloodView extends JFrame {
 
 
 
-    protected ColorFloodView() {
+    protected ColorFlood() {
 
         initializeGamePanel();
 
@@ -50,7 +47,7 @@ public class ColorFloodView extends JFrame {
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
 
@@ -72,7 +69,9 @@ public class ColorFloodView extends JFrame {
         String userInput = (String) JOptionPane.showInputDialog(
                 null,
                 "Please select the level of difficulty for the game. " +
-                        "\n If you do not answer, the difficulty will be set for you. ",
+                        "\nIf you do not answer, the difficulty will be set for you. " +
+                        "\n\nWhen you exit this window you must select the starting cell. " +
+                        "\nOnce you do, the game will start. Good luck!",
                 "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
@@ -80,8 +79,9 @@ public class ColorFloodView extends JFrame {
 
         if((userInput != null) && (userInput.length() > 0)) {
             return userInput;
+        } else {
+            return Properties.DIFFICULTY[2];
         }
-        return Properties.DIFFICULTY[2];
     }
 
 
@@ -97,6 +97,7 @@ public class ColorFloodView extends JFrame {
         controlsPanel.setLayout(new GridLayout(1, 0));
         controlsPanel.setBackground(Properties.BACKGROUND_COLOR);
         controlsPanel.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+
 
     }
 
@@ -139,6 +140,6 @@ public class ColorFloodView extends JFrame {
 
 
     public static void main(String[] args) {
-        new ColorFloodView().setVisible(true);
+        new ColorFlood().setVisible(true);
     }
 }
