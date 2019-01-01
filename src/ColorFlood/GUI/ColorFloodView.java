@@ -1,6 +1,5 @@
 package ColorFlood.GUI;
 
-import ColorFlood.Countdown;
 import ColorFlood.Properties;
 
 import javax.swing.*;
@@ -19,6 +18,7 @@ public class ColorFloodView extends JFrame {
 
     private Countdown gameTimer = new Countdown();
     private String time = gameTimer.getRemainingTimeString();
+    private JLabel clock = new JLabel(time);
 
     private JButton buttonRed;
     private JButton buttonCyan;
@@ -68,10 +68,10 @@ public class ColorFloodView extends JFrame {
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
-        JLabel clock = new JLabel(time);
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
         timerPanel.add(clock);
+
     }
 
 
@@ -150,7 +150,7 @@ public class ColorFloodView extends JFrame {
         }
     }
 
-    public class Countdown {
+    public class Countdown{
         private final int INITIAL_TIME = 90_000;
         private int remainingTime;
         private java.util.Timer timer;
@@ -168,6 +168,7 @@ public class ColorFloodView extends JFrame {
                         time = getRemainingTimeString();
                         remainingTime = remainingTime - 1000;
                         boardView.getBoard().setTime(remainingTime);
+                        repaint();
                     }
                 };
                 timer.schedule(decrement, 50, 1000);

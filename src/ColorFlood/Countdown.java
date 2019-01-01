@@ -1,9 +1,10 @@
 //package ColorFlood;
 //
+//import javax.swing.*;
 //import java.util.Timer;
 //import java.util.TimerTask;
 //
-//public class Countdown {
+//public class Countdown extends JComponent {
 //    private final int INITIAL_TIME = 90_000;
 //    private int remainingTime;
 //    private Timer timer;
