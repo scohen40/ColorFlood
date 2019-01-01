@@ -128,7 +128,7 @@ public class ColorFlood extends JFrame {
 
                 System.out.println("first click happened");
 
-                board.setCellActive(col, row);
+                board.activateFirstCell(col, row);
 
                 removeFirstClickListeners();
                 toggleColorControlButtons(true);
@@ -315,9 +315,6 @@ public class ColorFlood extends JFrame {
             timer.cancel();
         }
     }
-
-
-
 
     public static void main (String[]args){
         new ColorFlood().setVisible(true);
