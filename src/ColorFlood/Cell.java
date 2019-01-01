@@ -3,7 +3,7 @@ package ColorFlood;
 import javax.swing.*;
 import java.awt.*;
 
-public class Cell extends JComponent{
+public class Cell extends JPanel{
 
     private int row;
     private int col;
@@ -15,35 +15,47 @@ public class Cell extends JComponent{
 
     private Color color;
 
-    public Cell(int row, int col, int rowHeight, int colWidth, Color color) {
+    public Cell(int row, int col, Color color) {
         this.row = row;
         this.col = col;
-
-        this.rowHeight = rowHeight;
-        this.colWidth = colWidth;
 
         this.color = color;
     }
 
-    protected void paintComponent(Graphics g) {
+//    public Cell(int row, int col, int rowHeight, int colWidth, Color color) {
+//        this.row = row;
+//        this.col = col;
+//
+//        this.rowHeight = rowHeight;
+//        this.colWidth = colWidth;
+//
+//        this.color = color;
+//    }
+
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.white);
-        g.fillRoundRect(50, 50, 100, 100, 10, 10);
+//        g.setColor(Color.pink);
+//        g.fillRoundRect(50, 50, 100, 100, 10, 10);
+        paintBackground(g);
 
         paintSquare(g);
     }
 
+    private void paintBackground(Graphics g) {
+        g.fillRect(0, 0, getWidth(), getHeight());
+    }
+
     private void paintSquare(Graphics g) {
-        //g.setColor(color);
-        g.setColor(Color.white);
-        g.fillRoundRect(50, 50, 100, 100, 10, 10);
-//                (int) (col * colWidth),
-//                (int) (row * rowHeight),
-//                (int) (rowHeight),
-//                (int) (colWidth),
-//                10,
-//                10);
+        g.setColor(color);
+        //g.setColor(Color.white);
+        g.fillRoundRect(
+                0,
+                0,
+                getWidth(),
+                getHeight(),
+                10,
+                10);
 
     }
 

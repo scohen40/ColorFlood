@@ -12,8 +12,8 @@ public class Board extends JPanel {
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
 
-    public int rowHeight;
-    public int columnWidth;
+//    public int rowHeight;
+//    public int columnWidth;
 
     public Color selectedColor;
 
@@ -30,17 +30,17 @@ public class Board extends JPanel {
         this.GAME_ROWS = GAME_ROWS;
 
         //setSquareSide();
-        calculateDimentions();
+      //  calculateDimensions();
 
         createGameBoard();
 
         setUpBoardPanel();
     }
 
-    private void calculateDimentions() {
-        rowHeight = (int) this.getHeight() / GAME_ROWS;
-        columnWidth = (int) this.getWidth() / GAME_COLUMNS;
-    }
+//    private void calculateDimensions() {
+//        rowHeight = (int) this.getHeight() / GAME_ROWS;
+//        columnWidth = (int) this.getWidth() / GAME_COLUMNS;
+//    }
 
     private void createGameBoard() {
         Random random = new Random();
@@ -49,7 +49,7 @@ public class Board extends JPanel {
         for (int row = 0; row < GAME_ROWS; row++) {
             for (int col = 0; col < GAME_COLUMNS; col++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
-                Cell newCell = new Cell(row, col, rowHeight, columnWidth,Properties.COLORS[cellColor]);
+                Cell newCell = new Cell(row, col,Properties.COLORS[cellColor]);
                 gameBoard[row][col] = newCell;
             }
         }
@@ -57,7 +57,7 @@ public class Board extends JPanel {
 
     private void setUpBoardPanel() {
         setLayout(new GridLayout(GAME_ROWS, GAME_COLUMNS));
-        setPreferredSize(Properties.BOARD_TABLE_SIZE);
+        //setPreferredSize(Properties.BOARD_TABLE_SIZE);
         setBorder(new EmptyBorder(20, 10, 0, 0));
         setBackground(Properties.BACKGROUND_COLOR);
 
