@@ -98,9 +98,7 @@ public class Board extends JPanel {
 
                 setCellActive(col, row);
 
-                System.out.println("clicked: " + e.getPoint() + " " + row + " " + col);
-
-                //removeFirstClickListener();
+                removeFirstClickListeners();
             }
 
             @Override
@@ -124,10 +122,14 @@ public class Board extends JPanel {
             }
         };
     }
-//
-//    private void removeFirstClickListener() {
-//        this.removeMouseListener(firstClickListener);
-//    }
+
+    private void removeFirstClickListeners() {
+        for(Cell cellRow[] : gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.removeMouseListener(firstClickListener);
+            }
+        }
+    }
 
     public void setSelectedColor(Color selectedColor) {
         //set color based on button clicked
