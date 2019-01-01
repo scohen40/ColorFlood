@@ -3,16 +3,19 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ColorFlood extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
-    private JPanel board;
+    private Board board;
     private JPanel controlsPanel;
+
+    private MouseListener firstClickListener;
 
     private Countdown gameTimer = new Countdown();
     private String time = gameTimer.getRemainingTimeString();
@@ -74,9 +77,14 @@ public class ColorFlood extends JFrame {
     }
 
 
+
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
         board = new BoardBuilder(difficulty).getBoard();
+
+
+        addFirstClickListeners();
+
     }
 
     private String setDifficultyQuery() {
@@ -100,6 +108,64 @@ public class ColorFlood extends JFrame {
             return Properties.DIFFICULTY[2];
         }
     }
+
+    private void addFirstClickListeners() {
+        setUpFirstClickListener();
+
+        for(Cell cellRow[] : board.gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.addMouseListener(firstClickListener);
+            }
+        }
+    }
+
+    private void setUpFirstClickListener() {
+        firstClickListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Cell clickedCell = (Cell) e.getSource();
+
+                int row = clickedCell.getRow();
+                int col = clickedCell.getCol();
+
+                board.setCellActive(col, row);
+
+                removeFirstClickListeners();
+                toggleColorControlButtons(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+    private void removeFirstClickListeners() {
+        for(Cell cellRow[] : board.gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.removeMouseListener(firstClickListener);
+            }
+        }
+
+    }
+
+
 
 
     private void setUpControlPanel() {
@@ -142,7 +208,7 @@ public class ColorFlood extends JFrame {
 
         addColorControlButtonsListeners();
 
-        //toggleColorControlButtons(false);
+        toggleColorControlButtons(false);
     }
 
     private void addColorControlButtonsListeners() {
@@ -156,6 +222,7 @@ public class ColorFlood extends JFrame {
             button.setEnabled(clickable);
         }
     }
+
 
 
     public class Countdown {

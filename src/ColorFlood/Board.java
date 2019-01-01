@@ -14,10 +14,6 @@ public class Board extends JPanel {
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
 
-//    public int rowHeight;
-//    public int columnWidth;
-
-    MouseListener firstClickListener;
 
     public Color selectedColor;
 
@@ -35,18 +31,11 @@ public class Board extends JPanel {
         this.GAME_COLUMNS = GAME_COLUMNS;
         this.GAME_ROWS = GAME_ROWS;
 
-        //setSquareSide();
-      //  calculateDimensions();
 
         createGameBoard();
 
         setUpBoardPanel();
     }
-
-//    private void calculateDimensions() {
-//        rowHeight = (int) this.getHeight() / GAME_ROWS;
-//        columnWidth = (int) this.getWidth() / GAME_COLUMNS;
-//    }
 
     private void createGameBoard() {
         Random random = new Random();
@@ -67,7 +56,6 @@ public class Board extends JPanel {
         setBackground(Properties.BACKGROUND_COLOR);
 
         addBoardPanelComponents();
-        addFirstClickListeners();
     }
 
     private void addBoardPanelComponents() {
@@ -78,61 +66,6 @@ public class Board extends JPanel {
         }
     }
 
-    private void addFirstClickListeners() {
-        setUpFirstClickListener();
-
-        for(Cell cellRow[] : gameBoard) {
-            for(Cell cell : cellRow) {
-                cell.addMouseListener(firstClickListener);
-            }
-        }
-    }
-
-
-    private void setUpFirstClickListener() {
-        firstClickListener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Cell clickedCell = (Cell) e.getSource();
-
-                int row = clickedCell.getRow();
-                int col = clickedCell.getCol();
-
-                setCellActive(col, row);
-
-                removeFirstClickListeners();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        };
-    }
-
-    private void removeFirstClickListeners() {
-        for(Cell cellRow[] : gameBoard) {
-            for(Cell cell : cellRow) {
-                cell.removeMouseListener(firstClickListener);
-            }
-        }
-
-    }
 
     
 
