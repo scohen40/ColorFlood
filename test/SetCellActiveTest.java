@@ -37,7 +37,6 @@ public class SetCellActiveTest
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
 		board.setSelectedColor(Color.RED);
-		board.flood();
 
 		//then
 		assertFalse(board.gameBoard[1][0].getColor() == Color.RED);
@@ -55,10 +54,10 @@ public class SetCellActiveTest
 
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
-		board.setSelectedColor(Color.BLUE);
+		board.setSelectedColor(Color.RED);
 
 		//then
-		assertTrue(board.gameBoard[1][1].getColor() == Color.BLUE);
+		assertTrue(board.gameBoard[1][1].getColor() == Color.RED);
 	}
 
 	@Test
@@ -124,9 +123,6 @@ public class SetCellActiveTest
 
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
-		/*board.gameBoard[0][0].setActive(true);
-		board.gameBoard[1][0].setActive(true);
-		board.gameBoard[2][0].setActive(true);*/
 
 		//then
 		assertTrue(board.gameBoard[0][0].isActive() == true);
