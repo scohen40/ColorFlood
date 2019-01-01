@@ -75,14 +75,11 @@ public class ColorFlood extends JFrame {
         timerPanel.add(clock);
     }
 
-
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
         board = new BoardBuilder(difficulty).getBoard();
 
-
         addFirstClickListeners();
-
     }
 
     private String setDifficultyQuery() {
@@ -123,8 +120,8 @@ public class ColorFlood extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Cell clickedCell = (Cell) e.getSource();
 
-                int row = clickedCell.getRow();
                 int col = clickedCell.getCol();
+                int row = clickedCell.getRow();
 
                 System.out.println("first click happened");
 
@@ -156,16 +153,13 @@ public class ColorFlood extends JFrame {
         };
     }
 
-
     private void removeFirstClickListeners() {
         for (Cell cellRow[] : board.gameBoard) {
             for (Cell cell : cellRow) {
                 cell.removeMouseListener(firstClickListener);
             }
         }
-
     }
-
 
     private void setUpControlPanel() {
 
@@ -179,8 +173,6 @@ public class ColorFlood extends JFrame {
         controlsPanel.setLayout(new GridLayout(1, 0));
         controlsPanel.setBackground(Properties.BACKGROUND_COLOR);
         controlsPanel.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
-
-
     }
 
     private void setUpControlColorButtons() {
@@ -198,11 +190,9 @@ public class ColorFlood extends JFrame {
 
             button.setBorder(new EmptyBorder(0, 50, 0, 50));
 
-
             controlsPanel.add(button);
             colorIndex++;
         }
-
 
         addColorControlButtonsListeners();
 
@@ -274,7 +264,6 @@ public class ColorFlood extends JFrame {
         }
     }
 
-
     public class Countdown {
         private final int INITIAL_TIME = 90_000;
         private int remainingTime;
@@ -292,7 +281,6 @@ public class ColorFlood extends JFrame {
                     public void run() {
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
-                        //board.getB().setTime(remainingTime);
                     }
                 };
                 timer.schedule(decrement, 50, 1000);
@@ -319,5 +307,4 @@ public class ColorFlood extends JFrame {
     public static void main (String[]args){
         new ColorFlood().setVisible(true);
     }
-
 }

@@ -3,23 +3,17 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Random;
 
 public class Board extends JPanel {
 
     public Cell[][] gameBoard;
-
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
-
-
     public Color selectedColor;
-
     private int activeCells;
-
     private int time;
+    private Cell firstCell;
 
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
@@ -30,7 +24,6 @@ public class Board extends JPanel {
     public Board(int GAME_COLUMNS, int GAME_ROWS) {
         this.GAME_COLUMNS = GAME_COLUMNS;
         this.GAME_ROWS = GAME_ROWS;
-
 
         createGameBoard();
 
@@ -111,6 +104,39 @@ public class Board extends JPanel {
         if (boardContains(col, row))
         {
             gameBoard[col][row].setActive(true);
+            activeCells++;
+            firstCell = gameBoard[col][row];
+            firstCellNeighborsToActivate(firstCell);
+        }
+    }
+
+    public void firstCellNeighborsToActivate(Cell cell)
+    {
+        //top
+        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() - 1);
+
+        //bottom
+        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() + 1);
+
+        //left
+        setFirstCellNeighborsActive(cell.getCol() - 1, cell.getRow());
+
+        //right
+        setFirstCellNeighborsActive(cell.getCol() + 1, cell.getRow());
+    }
+
+    public void setFirstCellNeighborsActive(int col, int row)
+    {
+        if (boardContains(col, row))
+        {
+            if (!gameBoard[col][row].isActive())
+            {
+                if (gameBoard[col][row].getColor() == firstCell.getColor())
+                {
+                    gameBoard[col][row].setActive(true);
+                    activeCells++;
+                }
+            }
         }
     }
 
