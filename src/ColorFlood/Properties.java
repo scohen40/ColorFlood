@@ -41,13 +41,13 @@ public class Properties {
     public static final int TIMER_PANEL_WIDTH = 500;
     public static final Dimension TIMER_PANEL_SIZE = new Dimension(TIMER_PANEL_WIDTH, TIMER_PANEL_HEIGHT);
 
-    public static final int COLOR_BUTTON_HEIGHT = 40;
-    public static final int COLOR_BUTTON_WIDTH = 40;
+    public static final int COLOR_BUTTON_HEIGHT = 60;
+    public static final int COLOR_BUTTON_WIDTH = 60;
     public static final Dimension COLOR_BUTTON_SIZE = new Dimension(COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT);
 
     public static final int BOARD_VIEW_HEIGHT = 500;
     public static final int BOARD_VIEW_WIDTH = 500;
-    public static final Dimension BOARD_VIEW_SIZE = new Dimension(BOARD_VIEW_WIDTH, BOARD_VIEW_HEIGHT);
+    public static final Dimension BOARD_TABLE_SIZE = new Dimension(BOARD_VIEW_WIDTH, BOARD_VIEW_HEIGHT);
 
 
     public static ImageIcon createImageIcon(Color color, int width, int height) {
