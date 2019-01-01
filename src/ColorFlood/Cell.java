@@ -22,21 +22,9 @@ public class Cell extends JPanel{
         this.color = color;
     }
 
-//    public Cell(int row, int col, int rowHeight, int colWidth, Color color) {
-//        this.row = row;
-//        this.col = col;
-//
-//        this.rowHeight = rowHeight;
-//        this.colWidth = colWidth;
-//
-//        this.color = color;
-//    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        g.setColor(Color.pink);
-//        g.fillRoundRect(50, 50, 100, 100, 10, 10);
         paintBackground(g);
 
         paintSquare(g);

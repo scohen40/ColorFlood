@@ -3,21 +3,25 @@ package ColorFlood;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-// import java.awt.event.MouseEvent;
-// import java.awt.event.MouseListener;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ColorFlood extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
-    private JPanel board;
+    private Board board;
     private JPanel controlsPanel;
 
     private Countdown gameTimer = new Countdown();
     private String time = gameTimer.getRemainingTimeString();
     private JLabel clock = new JLabel(time);
 
+    private MouseListener firstClickListener;
 
     private JButton buttonRed;
     private JButton buttonCyan;
@@ -25,9 +29,7 @@ public class ColorFlood extends JFrame {
     private JButton buttonGreen;
     private JButton buttonBlue;
     private JButton buttonMagenta;
-
-    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
-
+    private ArrayList<JButton> colorButtons;
 
     protected ColorFlood() {
 
@@ -77,6 +79,10 @@ public class ColorFlood extends JFrame {
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
         board = new BoardBuilder(difficulty).getBoard();
+
+
+        addFirstClickListeners();
+
     }
 
     private String setDifficultyQuery() {
@@ -86,19 +92,78 @@ public class ColorFlood extends JFrame {
                 "Please select the level of difficulty for the game. " +
                         "\nIf you do not answer, the difficulty will be set for you. " +
                         "\n\nWhen you exit this window you must select the starting cell. " +
-                        "\nGood luck!",
+                        "\nOnce you do, the game will start. Good luck!",
                 "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
 
 
-        if((userInput != null) && (userInput.length() > 0)) {
+        if ((userInput != null) && (userInput.length() > 0)) {
 
             return userInput;
         } else {
             return Properties.DIFFICULTY[2];
         }
+    }
+
+    private void addFirstClickListeners() {
+        setUpFirstClickListener();
+
+        for (Cell cellRow[] : board.gameBoard) {
+            for (Cell cell : cellRow) {
+                cell.addMouseListener(firstClickListener);
+            }
+        }
+    }
+
+    private void setUpFirstClickListener() {
+        firstClickListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Cell clickedCell = (Cell) e.getSource();
+
+                int row = clickedCell.getRow();
+                int col = clickedCell.getCol();
+
+                System.out.println("first click happened");
+
+                board.activateFirstCell(col, row);
+
+                removeFirstClickListeners();
+                toggleColorControlButtons(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+
+    private void removeFirstClickListeners() {
+        for (Cell cellRow[] : board.gameBoard) {
+            for (Cell cell : cellRow) {
+                cell.removeMouseListener(firstClickListener);
+            }
+        }
+
     }
 
 
@@ -120,38 +185,90 @@ public class ColorFlood extends JFrame {
 
     private void setUpControlColorButtons() {
 
+        setUpColorButtonsList();
 
-        for(int current = 0; current < colorButtons.length; current++) {
+        int colorIndex = 0;
+        for (JButton button : colorButtons) {
 
-            JButton newButton = new JButton();
-
-
-            newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
-            newButton.setIcon(Properties.createImageIcon(
-                    Properties.COLORS[current],
+            button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+            button.setIcon(Properties.createImageIcon(
+                    Properties.COLORS[colorIndex],
                     Properties.COLOR_BUTTON_WIDTH,
                     Properties.COLOR_BUTTON_HEIGHT));
 
-            newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
+            button.setBorder(new EmptyBorder(0, 50, 0, 50));
 
 
-            colorButtons[current] = newButton;
-            controlsPanel.add(colorButtons[current]);
+            controlsPanel.add(button);
+            colorIndex++;
         }
 
 
         addColorControlButtonsListeners();
 
-        //toggleColorControlButtons(false);
+        toggleColorControlButtons(false);
     }
 
-    private void addColorControlButtonsListeners() {
-        //to do
+    private void setUpColorButtonsList() {
+
+        buttonYellow = new JButton();
+        buttonRed = new JButton();
+        buttonBlue = new JButton();
+        buttonGreen = new JButton();
+        buttonMagenta = new JButton();
+        buttonCyan = new JButton();
+
+        colorButtons = new ArrayList<>();
+        colorButtons.add(buttonRed);
+        colorButtons.add(buttonCyan);
+        colorButtons.add(buttonYellow);
+        colorButtons.add(buttonGreen);
+        colorButtons.add(buttonBlue);
+        colorButtons.add(buttonMagenta);
+
+    }
+
+    public void addColorControlButtonsListeners() {
+        buttonRed.addActionListener(this::redButtonClicked);
+        buttonCyan.addActionListener(this::cyanButtonClicked);
+        buttonYellow.addActionListener(this::yellowButtonClicked);
+        buttonGreen.addActionListener(this::greenButtonClicked);
+        buttonBlue.addActionListener(this::blueButtonClicked);
+        buttonMagenta.addActionListener(this::magentaButtonClicked);
+    }
+
+    private void redButtonClicked(ActionEvent actionEvent) {
+        System.out.println("red clicked");
+        board.setSelectedColor(Properties.RED);
+    }
+
+    private void cyanButtonClicked(ActionEvent actionEvent) {
+        System.out.println("cyan clicked");
+        board.setSelectedColor(Properties.CYAN);
+    }
+
+    private void yellowButtonClicked(ActionEvent actionEvent) {
+        System.out.println("yellow clicked");
+        board.setSelectedColor(Properties.YELLOW);
+    }
+
+    private void greenButtonClicked(ActionEvent actionEvent) {
+        System.out.println("green clicked");
+        board.setSelectedColor(Properties.GREEN);
+    }
+
+    private void blueButtonClicked(ActionEvent actionEvent) {
+        System.out.println("blue clicked");
+        board.setSelectedColor(Properties.BLUE);
+    }
+
+    private void magentaButtonClicked(ActionEvent actionEvent) {
+        System.out.println("magenta clicked");
+        board.setSelectedColor(Properties.MAGENTA);
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
-
-        for(JButton button : colorButtons) {
+        for (JButton button : colorButtons) {
 
             button.setEnabled(clickable);
         }
@@ -163,35 +280,43 @@ public class ColorFlood extends JFrame {
         private int remainingTime;
         private java.util.Timer timer;
 
-        Countdown() {
+        public Countdown() {
             this.timer = new Timer();
             remainingTime = INITIAL_TIME;
         }
 
-        void runTimer() {
+        public void runTimer() {
+            if (remainingTime > 0) {
                 TimerTask decrement = new TimerTask() {
                     @Override
                     public void run() {
-                        if(remainingTime >= 0){
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
-                        //todo figure this out
-                        // board.setTime(remainingTime);
-                    }else {timer.cancel();}}
-
+                        //board.getB().setTime(remainingTime);
+                    }
                 };
                 timer.schedule(decrement, 50, 1000);
+            } else {
+                cancelTimer();
+            }
         }
 
-        String getRemainingTimeString() {
+        public int getRemainingTime() {
+            return remainingTime;
+        }
+
+        public String getRemainingTimeString() {
             int min = remainingTime / 60_000;
             int sec = remainingTime % 60_000 / 1000;
             return String.format("%02d:%02d", min, sec);
         }
 
+        public void cancelTimer() {
+            timer.cancel();
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main (String[]args){
         new ColorFlood().setVisible(true);
     }
 

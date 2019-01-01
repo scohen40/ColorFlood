@@ -14,10 +14,6 @@ public class Board extends JPanel {
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
 
-//    public int rowHeight;
-//    public int columnWidth;
-
-    MouseListener firstClickListener;
 
     public Color selectedColor;
 
@@ -35,18 +31,11 @@ public class Board extends JPanel {
         this.GAME_COLUMNS = GAME_COLUMNS;
         this.GAME_ROWS = GAME_ROWS;
 
-        //setSquareSide();
-      //  calculateDimensions();
 
         createGameBoard();
 
         setUpBoardPanel();
     }
-
-//    private void calculateDimensions() {
-//        rowHeight = (int) this.getHeight() / GAME_ROWS;
-//        columnWidth = (int) this.getWidth() / GAME_COLUMNS;
-//    }
 
     private void createGameBoard() {
         Random random = new Random();
@@ -67,7 +56,6 @@ public class Board extends JPanel {
         setBackground(Properties.BACKGROUND_COLOR);
 
         addBoardPanelComponents();
-        addFirstClickListeners();
     }
 
     private void addBoardPanelComponents() {
@@ -78,95 +66,22 @@ public class Board extends JPanel {
         }
     }
 
-    private void addFirstClickListeners() {
-        setUpFirstClickListener();
-
-        for(Cell cellRow[] : gameBoard) {
-            for(Cell cell : cellRow) {
-                cell.addMouseListener(firstClickListener);
-            }
-        }
-    }
-
-
-    private void setUpFirstClickListener() {
-        firstClickListener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Cell clickedCell = (Cell) e.getSource();
-
-                int row = clickedCell.getRow();
-                int col = clickedCell.getCol();
-
-                setCellActive(col, row);
-
-                removeFirstClickListeners();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        };
-    }
-
-    private void removeFirstClickListeners() {
-        for(Cell cellRow[] : gameBoard) {
-            for(Cell cell : cellRow) {
-                cell.removeMouseListener(firstClickListener);
-            }
-        }
-
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public void setSelectedColor(Color selectedColor) {
-        //set color based on button clicked
         this.selectedColor = selectedColor;
+        flood();
     }
 
     private void activateNeighbors() {
-        //ArrayList<Cell> neighbors = new ArrayList<>();
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
                 Cell cell = gameBoard[col][row];
                 if (cell.isActive()) {
-                    //check for neighbors of search color and activate
-                    //iterate active cells
                     neighborsToActivate(cell);
-                    //neighbors.addAll(neighborsToActivate(cell));
                 }
             }
-        }
-        /*//set active after finding all cells that are active when user clicked
-        for (Cell neighbor : neighbors)
-        {
-            neighbor.setActive(true);
-            activeCells++;
-        }*/ //set active in neighborstoactivate because then it will keep checking for same colored blocks
-    }
+        }}
 
     private void neighborsToActivate(Cell cell) {
-        //ArrayList<Cell> activatedNeighbors = new ArrayList<>();
-
         //top
         setCellActive(cell.getCol(), cell.getRow() - 1);
 
@@ -178,8 +93,6 @@ public class Board extends JPanel {
 
         //right
         setCellActive(cell.getCol() + 1, cell.getRow());
-
-        //return activatedNeighbors;
     }
 
     public void setCellActive(int col, int row) {
@@ -193,9 +106,16 @@ public class Board extends JPanel {
         }
     }
 
+    public void activateFirstCell(int col, int row)
+    {
+        if (boardContains(col, row))
+        {
+            gameBoard[col][row].setActive(true);
+        }
+    }
+
     private boolean boardContains(int col, int row) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
-
     }
 
     private void colorActiveCells(Color color) {
@@ -207,11 +127,12 @@ public class Board extends JPanel {
                 }
             }
         }
+        repaint();
     }
 
     public void flood() {
         activateNeighbors();
-        colorActiveCells(selectedColor); //call here or in repaint?
+        colorActiveCells(selectedColor);
     }
 
     public boolean gameOver() {
