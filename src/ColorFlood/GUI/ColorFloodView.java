@@ -21,7 +21,7 @@ public class ColorFloodView extends JFrame {
     private JButton buttonBlue;
     private JButton buttonMagenta;
 
-    private JButton[] colorButtons = { buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta };
+    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
 
     protected ColorFloodView() {
 
@@ -60,7 +60,7 @@ public class ColorFloodView extends JFrame {
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
-        String time = boardView.getBoard().getGameTimer().getRemainingTimeString();
+        String time = boardView.getTime();
         JLabel clock = new JLabel(time);
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
@@ -86,7 +86,7 @@ public class ColorFloodView extends JFrame {
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
 
-        if((userInput != null) && (userInput.length() > 0)) {
+        if ((userInput != null) && (userInput.length() > 0)) {
             return userInput;
         }
         return Properties.DIFFICULTY[2];
@@ -110,7 +110,7 @@ public class ColorFloodView extends JFrame {
 
     private void setUpControlColorButtons() {
 
-        for(int current = 0; current < colorButtons.length; current++) {
+        for (int current = 0; current < colorButtons.length; current++) {
             JButton newButton = new JButton();
 
 
@@ -138,7 +138,7 @@ public class ColorFloodView extends JFrame {
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
-        for(JButton button : colorButtons) {
+        for (JButton button : colorButtons) {
             button.setEnabled(clickable);
         }
     }

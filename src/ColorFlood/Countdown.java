@@ -14,7 +14,7 @@ public class Countdown {
     }
 
     public void runTimer() {
-        if (remainingTime > 0) {
+        while (remainingTime > 0) {
             TimerTask decrement = new TimerTask() {
                 @Override
                 public void run() {
@@ -23,6 +23,8 @@ public class Countdown {
             };
             timer.schedule(decrement, 50, 1000);
         }
+        cancelTimer();
+
     }
 
     public int getRemainingTime() {
@@ -32,6 +34,7 @@ public class Countdown {
     public String getRemainingTimeString() {
         int min = remainingTime / 60_000;
         int sec = remainingTime % 60_000 / 1000;
+        System.out.printf("%02d:%02d", min, sec);
         return String.format("%02d:%02d", min, sec);
     }
 
