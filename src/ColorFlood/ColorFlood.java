@@ -11,7 +11,7 @@ import java.util.TimerTask;
 public class ColorFlood extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
-    private JPanel board;
+    private Board board;
     private JPanel controlsPanel;
 
     private Countdown gameTimer = new Countdown();
@@ -175,8 +175,7 @@ public class ColorFlood extends JFrame {
                         if(remainingTime >= 0){
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
-                        //todo figure this out
-                        // board.setTime(remainingTime);
+                        board.setTime(remainingTime);
                     }else {timer.cancel();}}
 
                 };
