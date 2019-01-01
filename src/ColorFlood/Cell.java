@@ -15,28 +15,16 @@ public class Cell extends JPanel{
 
     private Color color;
 
-    public Cell(int row, int col, Color color) {
-        this.row = row;
+    public Cell(int col, int row, Color color) {
         this.col = col;
+        this.row = row;
 
         this.color = color;
     }
 
-//    public Cell(int row, int col, int rowHeight, int colWidth, Color color) {
-//        this.row = row;
-//        this.col = col;
-//
-//        this.rowHeight = rowHeight;
-//        this.colWidth = colWidth;
-//
-//        this.color = color;
-//    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        g.setColor(Color.pink);
-//        g.fillRoundRect(50, 50, 100, 100, 10, 10);
         paintBackground(g);
 
         paintSquare(g);
@@ -84,6 +72,4 @@ public class Cell extends JPanel{
     public void setColor(Color color) {
         this.color = color;
     }
-
-
 }
