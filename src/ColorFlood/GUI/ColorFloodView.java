@@ -1,5 +1,6 @@
 package ColorFlood.GUI;
 
+import ColorFlood.Countdown;
 import ColorFlood.Properties;
 
 import javax.swing.*;
@@ -7,12 +8,17 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
     private BoardView boardView;
     private JPanel gameControls;
+
+    private Countdown gameTimer = new Countdown();
+    private String time = gameTimer.getRemainingTimeString();
 
     private JButton buttonRed;
     private JButton buttonCyan;
@@ -27,9 +33,9 @@ public class ColorFloodView extends JFrame {
 
         initializeGamePanel();
 
-        setUpBoardView();
-
         setUpTimerPanel();
+
+        setUpBoardView();
 
         setUpControlPanel();
 
@@ -38,6 +44,8 @@ public class ColorFloodView extends JFrame {
         panel.add(gameControls, BorderLayout.SOUTH);
 
         add(panel);
+
+        gameTimer.runTimer();
     }
 
     private void initializeGamePanel() {
@@ -60,7 +68,6 @@ public class ColorFloodView extends JFrame {
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
-        String time = boardView.getTime();
         JLabel clock = new JLabel(time);
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
@@ -140,6 +147,48 @@ public class ColorFloodView extends JFrame {
     private void toggleColorControlButtons(Boolean clickable) {
         for (JButton button : colorButtons) {
             button.setEnabled(clickable);
+        }
+    }
+
+    public class Countdown {
+        private final int INITIAL_TIME = 90_000;
+        private int remainingTime;
+        private java.util.Timer timer;
+
+        public Countdown() {
+            this.timer = new Timer();
+            remainingTime = INITIAL_TIME;
+        }
+
+        public void runTimer() {
+            if (remainingTime > 0) {
+                TimerTask decrement = new TimerTask() {
+                    @Override
+                    public void run() {
+                        time = getRemainingTimeString();
+                        remainingTime = remainingTime - 1000;
+                        boardView.getBoard().setTime(remainingTime);
+                    }
+                };
+                timer.schedule(decrement, 50, 1000);
+            } else {
+                cancelTimer();
+            }
+        }
+
+        public int getRemainingTime() {
+            return remainingTime;
+        }
+
+        public String getRemainingTimeString() {
+            int min = remainingTime / 60_000;
+            int sec = remainingTime % 60_000 / 1000;
+            System.out.printf("%02d:%02d", min, sec);
+            return String.format("%02d:%02d", min, sec);
+        }
+
+        public void cancelTimer() {
+            timer.cancel();
         }
     }
 
