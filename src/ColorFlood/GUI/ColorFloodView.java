@@ -150,7 +150,7 @@ public class ColorFloodView extends JFrame {
         }
     }
 
-    public class Countdown{
+    public class Countdown {
         private final int INITIAL_TIME = 90_000;
         private int remainingTime;
         private java.util.Timer timer;
@@ -165,10 +165,9 @@ public class ColorFloodView extends JFrame {
                 TimerTask decrement = new TimerTask() {
                     @Override
                     public void run() {
-                        time = getRemainingTimeString();
+                        clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
                         boardView.getBoard().setTime(remainingTime);
-                        repaint();
                     }
                 };
                 timer.schedule(decrement, 50, 1000);
@@ -184,7 +183,6 @@ public class ColorFloodView extends JFrame {
         public String getRemainingTimeString() {
             int min = remainingTime / 60_000;
             int sec = remainingTime % 60_000 / 1000;
-            System.out.printf("%02d:%02d", min, sec);
             return String.format("%02d:%02d", min, sec);
         }
 
