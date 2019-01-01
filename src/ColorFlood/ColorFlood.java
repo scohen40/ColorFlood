@@ -4,8 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,17 +29,7 @@ public class ColorFlood extends JFrame {
     private JButton buttonGreen;
     private JButton buttonBlue;
     private JButton buttonMagenta;
-    private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow,
-            buttonGreen, buttonBlue, buttonMagenta};
-    private MouseListener buttonRedListener;
-    private MouseListener buttonCyanListner;
-    private MouseListener buttonYellowListener;
-    private MouseListener buttonGreenListner;
-    private MouseListener buttonBlueListner;
-    private MouseListener buttonMagentaListener;
-    private MouseListener[] colorButtonListeners = {buttonRedListener, buttonCyanListner, buttonYellowListener,
-            buttonGreenListner, buttonBlueListner, buttonMagentaListener};
-
+    private ArrayList<JButton> colorButtons;
 
     protected ColorFlood() {
 
@@ -84,7 +76,6 @@ public class ColorFlood extends JFrame {
     }
 
 
-
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
         board = new BoardBuilder(difficulty).getBoard();
@@ -108,7 +99,7 @@ public class ColorFlood extends JFrame {
                 Properties.DIFFICULTY[0]); // Initial choice
 
 
-        if((userInput != null) && (userInput.length() > 0)) {
+        if ((userInput != null) && (userInput.length() > 0)) {
 
             return userInput;
         } else {
@@ -119,8 +110,8 @@ public class ColorFlood extends JFrame {
     private void addFirstClickListeners() {
         setUpFirstClickListener();
 
-        for(Cell cellRow[] : board.gameBoard) {
-            for(Cell cell : cellRow) {
+        for (Cell cellRow[] : board.gameBoard) {
+            for (Cell cell : cellRow) {
                 cell.addMouseListener(firstClickListener);
             }
         }
@@ -134,6 +125,8 @@ public class ColorFlood extends JFrame {
 
                 int row = clickedCell.getRow();
                 int col = clickedCell.getCol();
+
+                System.out.println("first click happened");
 
                 board.setCellActive(col, row);
 
@@ -163,16 +156,15 @@ public class ColorFlood extends JFrame {
         };
     }
 
+
     private void removeFirstClickListeners() {
-        for(Cell cellRow[] : board.gameBoard) {
-            for(Cell cell : cellRow) {
+        for (Cell cellRow[] : board.gameBoard) {
+            for (Cell cell : cellRow) {
                 cell.removeMouseListener(firstClickListener);
             }
         }
 
     }
-
-
 
 
     private void setUpControlPanel() {
@@ -193,22 +185,22 @@ public class ColorFlood extends JFrame {
 
     private void setUpControlColorButtons() {
 
+        setUpColorButtonsList();
 
-        for(int current = 0; current < colorButtons.length; current++) {
+        int colorIndex = 0;
+        for (JButton button : colorButtons) {
 
-            JButton newButton = new JButton();
-
-            newButton.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
-            newButton.setIcon(Properties.createImageIcon(
-                    Properties.COLORS[current],
+            button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+            button.setIcon(Properties.createImageIcon(
+                    Properties.COLORS[colorIndex],
                     Properties.COLOR_BUTTON_WIDTH,
                     Properties.COLOR_BUTTON_HEIGHT));
 
-            newButton.setBorder(new EmptyBorder(0, 50, 0, 50));
+            button.setBorder(new EmptyBorder(0, 50, 0, 50));
 
 
-            colorButtons[current] = newButton;
-            controlsPanel.add(colorButtons[current]);
+            controlsPanel.add(button);
+            colorIndex++;
         }
 
 
@@ -217,58 +209,70 @@ public class ColorFlood extends JFrame {
         toggleColorControlButtons(false);
     }
 
-    private void addColorControlButtonsListeners() {
-        setUpColorControlButtonListeners();
+    private void setUpColorButtonsList() {
 
-        for(JButton button : colorButtons) {
-            for(MouseListener colorButtonListener : colorButtonListeners) {
-                button.addMouseListener(colorButtonListener);
-            }
-        }
+        buttonYellow = new JButton();
+        buttonRed = new JButton();
+        buttonBlue = new JButton();
+        buttonGreen = new JButton();
+        buttonMagenta = new JButton();
+        buttonCyan = new JButton();
+
+        colorButtons = new ArrayList<>();
+        colorButtons.add(buttonRed);
+        colorButtons.add(buttonCyan);
+        colorButtons.add(buttonYellow);
+        colorButtons.add(buttonGreen);
+        colorButtons.add(buttonBlue);
+        colorButtons.add(buttonMagenta);
+
     }
 
-    private void setUpColorControlButtonListeners() {
-        for(MouseListener colorButtonListener : colorButtonListeners) {
-            for(Color color : Properties.COLORS) {
-                colorButtonListener = new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        board.setSelectedColor(color);
-                    }
+    public void addColorControlButtonsListeners() {
+        buttonRed.addActionListener(this::redButtonClicked);
+        buttonCyan.addActionListener(this::cyanButtonClicked);
+        buttonYellow.addActionListener(this::yellowButtonClicked);
+        buttonGreen.addActionListener(this::greenButtonClicked);
+        buttonBlue.addActionListener(this::blueButtonClicked);
+        buttonMagenta.addActionListener(this::magentaButtonClicked);
+    }
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
+    private void redButtonClicked(ActionEvent actionEvent) {
+        System.out.println("red clicked");
+        board.setSelectedColor(Properties.RED);
+    }
 
-                    }
+    private void cyanButtonClicked(ActionEvent actionEvent) {
+        System.out.println("cyan clicked");
+        board.setSelectedColor(Properties.CYAN);
+    }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
+    private void yellowButtonClicked(ActionEvent actionEvent) {
+        System.out.println("yellow clicked");
+        board.setSelectedColor(Properties.YELLOW);
+    }
 
-                    }
+    private void greenButtonClicked(ActionEvent actionEvent) {
+        System.out.println("green clicked");
+        board.setSelectedColor(Properties.GREEN);
+    }
 
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
+    private void blueButtonClicked(ActionEvent actionEvent) {
+        System.out.println("blue clicked");
+        board.setSelectedColor(Properties.BLUE);
+    }
 
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-
-                    }
-                };
-            }
-
-        }
+    private void magentaButtonClicked(ActionEvent actionEvent) {
+        System.out.println("magenta clicked");
+        board.setSelectedColor(Properties.MAGENTA);
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
-
-        for(JButton button : colorButtons) {
+        for (JButton button : colorButtons) {
 
             button.setEnabled(clickable);
         }
     }
-
 
 
     public class Countdown {
@@ -314,8 +318,10 @@ public class ColorFlood extends JFrame {
 
 
 
-    public static void main(String[] args) {
+
+    public static void main (String[]args){
         new ColorFlood().setVisible(true);
     }
 
 }
+
