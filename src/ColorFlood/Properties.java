@@ -47,7 +47,7 @@ public class Properties {
 
     public static final int BOARD_VIEW_HEIGHT = 500;
     public static final int BOARD_VIEW_WIDTH = 500;
-    public static final Dimension BOARD_VIEW_SIZE = new Dimension(BOARD_VIEW_WIDTH, BOARD_VIEW_HEIGHT);
+    public static final Dimension BOARD_TABLE_SIZE = new Dimension(BOARD_VIEW_WIDTH, BOARD_VIEW_HEIGHT);
 
 
     public static ImageIcon createImageIcon(Color color, int width, int height) {

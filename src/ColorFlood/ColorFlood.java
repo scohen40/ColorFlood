@@ -1,6 +1,4 @@
-package ColorFlood.GUI;
-
-import ColorFlood.Properties;
+package ColorFlood;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,11 +8,11 @@ import java.awt.event.MouseListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ColorFloodView extends JFrame {
+public class ColorFlood extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
-    private BoardView boardView;
-    private JPanel gameControls;
+    private JPanel board;
+    private JPanel controlsPanel;
 
     private Countdown gameTimer = new Countdown();
     private String time = gameTimer.getRemainingTimeString();
@@ -29,19 +27,17 @@ public class ColorFloodView extends JFrame {
 
     private JButton[] colorButtons = {buttonRed, buttonCyan, buttonYellow, buttonGreen, buttonBlue, buttonMagenta};
 
-    protected ColorFloodView() {
+    protected ColorFlood() {
 
         initializeGamePanel();
 
         setUpTimerPanel();
-
-        setUpBoardView();
-
+        setUpBoardPanel();
         setUpControlPanel();
 
         panel.add(timerPanel, BorderLayout.NORTH);
-        panel.add(boardView, BorderLayout.CENTER);
-        panel.add(gameControls, BorderLayout.SOUTH);
+        panel.add(board, BorderLayout.CENTER);
+        panel.add(controlsPanel, BorderLayout.SOUTH);
 
         add(panel);
 
@@ -58,7 +54,7 @@ public class ColorFloodView extends JFrame {
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
 
@@ -75,19 +71,19 @@ public class ColorFloodView extends JFrame {
     }
 
 
-    private void setUpBoardView() {
-        String difficulty = preGameQuery();
-        boardView = new BoardView(difficulty);
-        boardView.setPreferredSize(Properties.BOARD_VIEW_SIZE);
-        boardView.setBorder(new EmptyBorder(20, 10, 0, 0));
+    private void setUpBoardPanel() {
+        String difficulty = setDifficultyQuery();
+        board = new BoardBuilder(difficulty).getBoard();
     }
 
-    private String preGameQuery() {
+    private String setDifficultyQuery() {
 
         String userInput = (String) JOptionPane.showInputDialog(
                 null,
                 "Please select the level of difficulty for the game. " +
-                        "\n If you do not answer, the difficulty will be set for you. ",
+                        "\nIf you do not answer, the difficulty will be set for you. " +
+                        "\n\nWhen you exit this window you must select the starting cell. " +
+                        "\nOnce you do, the game will start. Good luck!",
                 "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
@@ -95,8 +91,9 @@ public class ColorFloodView extends JFrame {
 
         if ((userInput != null) && (userInput.length() > 0)) {
             return userInput;
+        } else {
+            return Properties.DIFFICULTY[2];
         }
-        return Properties.DIFFICULTY[2];
     }
 
 
@@ -108,10 +105,11 @@ public class ColorFloodView extends JFrame {
     }
 
     private void initializeControlPanel() {
-        gameControls = new JPanel();
-        gameControls.setLayout(new GridLayout(1, 0));
-        gameControls.setBackground(Properties.BACKGROUND_COLOR);
-        gameControls.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+        controlsPanel = new JPanel();
+        controlsPanel.setLayout(new GridLayout(1, 0));
+        controlsPanel.setBackground(Properties.BACKGROUND_COLOR);
+        controlsPanel.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+
 
     }
 
@@ -131,7 +129,7 @@ public class ColorFloodView extends JFrame {
 
 
             colorButtons[current] = newButton;
-            gameControls.add(colorButtons[current]);
+            controlsPanel.add(colorButtons[current]);
         }
 
 
@@ -167,7 +165,7 @@ public class ColorFloodView extends JFrame {
                     public void run() {
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
-                        boardView.getBoard().setTime(remainingTime);
+                        //board.getB().setTime(remainingTime);
                     }
                 };
                 timer.schedule(decrement, 50, 1000);
@@ -193,7 +191,7 @@ public class ColorFloodView extends JFrame {
 
 
     public static void main(String[] args) {
-        new ColorFloodView().setVisible(true);
+        new ColorFlood().setVisible(true);
     }
 
 }

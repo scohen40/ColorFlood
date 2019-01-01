@@ -1,14 +1,23 @@
 package ColorFlood;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
-public class Board {
+public class Board extends JPanel {
 
     public Cell[][] gameBoard;
 
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
+
+//    public int rowHeight;
+//    public int columnWidth;
+
+    MouseListener firstClickListener;
 
     public Color selectedColor;
 
@@ -26,24 +35,102 @@ public class Board {
         this.GAME_COLUMNS = GAME_COLUMNS;
         this.GAME_ROWS = GAME_ROWS;
 
+        //setSquareSide();
+      //  calculateDimensions();
+
         createGameBoard();
+
+        setUpBoardPanel();
     }
+
+//    private void calculateDimensions() {
+//        rowHeight = (int) this.getHeight() / GAME_ROWS;
+//        columnWidth = (int) this.getWidth() / GAME_COLUMNS;
+//    }
 
     private void createGameBoard() {
         Random random = new Random();
         int cellColor;
-        gameBoard = new Cell[GAME_COLUMNS][GAME_ROWS];
+        gameBoard = new Cell[GAME_ROWS][GAME_COLUMNS];
         for (int row = 0; row < GAME_ROWS; row++) {
             for (int col = 0; col < GAME_COLUMNS; col++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
-                Cell newCell = new Cell(row, col, Properties.COLORS[cellColor]);
+                Cell newCell = new Cell(row, col,Properties.COLORS[cellColor]);
                 gameBoard[row][col] = newCell;
             }
         }
     }
 
-    public Cell[][] getGameBoard() {
-        return gameBoard;
+    private void setUpBoardPanel() {
+        setLayout(new GridLayout(GAME_ROWS, GAME_COLUMNS));
+        setBorder(new EmptyBorder(20, 10, 20, 10));
+        setBackground(Properties.BACKGROUND_COLOR);
+
+        addBoardPanelComponents();
+        addFirstClickListeners();
+    }
+
+    private void addBoardPanelComponents() {
+        for(int r = 0; r < GAME_ROWS; r++) {
+            for(int c = 0; c < GAME_COLUMNS; c++) {
+                add(gameBoard[r][c]);
+            }
+        }
+    }
+
+    private void addFirstClickListeners() {
+        setUpFirstClickListener();
+
+        for(Cell cellRow[] : gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.addMouseListener(firstClickListener);
+            }
+        }
+    }
+
+
+    private void setUpFirstClickListener() {
+        firstClickListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Cell clickedCell = (Cell) e.getSource();
+
+                int row = clickedCell.getRow();
+                int col = clickedCell.getCol();
+
+                setCellActive(col, row);
+
+                removeFirstClickListeners();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+    private void removeFirstClickListeners() {
+        for(Cell cellRow[] : gameBoard) {
+            for(Cell cell : cellRow) {
+                cell.removeMouseListener(firstClickListener);
+            }
+        }
     }
 
     public void setTime(int time) {
@@ -141,4 +228,11 @@ public class Board {
         //do the other stuff
     }
 
+    public Cell[][] getGameBoard() {
+        return gameBoard;
+    }
+
+    public Color getSelectedColor() {
+        return selectedColor;
+    }
 }
