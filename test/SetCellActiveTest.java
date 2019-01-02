@@ -54,10 +54,10 @@ public class SetCellActiveTest
 
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
-		board.setSelectedColor(Color.RED);
+		board.setSelectedColor(Color.BLUE);
 
 		//then
-		assertTrue(board.gameBoard[1][1].getColor() == Color.RED);
+		assertTrue(board.gameBoard[1][1].isActive());
 	}
 
 	@Test
