@@ -8,8 +8,8 @@ import java.util.Random;
 public class Board extends JPanel {
 
     public Cell[][] gameBoard;
-    public final int GAME_ROWS;
-    public final int GAME_COLUMNS;
+    private final int GAME_ROWS;
+    private final int GAME_COLUMNS;
     public Color selectedColor;
     private int activeCells;
     private int time;
@@ -37,8 +37,10 @@ public class Board extends JPanel {
         for (int row = 0; row < GAME_ROWS; row++) {
             for (int col = 0; col < GAME_COLUMNS; col++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
+
                 Cell newCell = new Cell(row, col,Properties.COLORS[cellColor]);
                 gameBoard[row][col] = newCell;
+
             }
         }
     }
@@ -110,10 +112,12 @@ public class Board extends JPanel {
         {
             gameBoard[row][col].setActive(true);
             activeCells++;
+
             firstCell = gameBoard[row][col];
             setSelectedColor(firstCell.getColor());
         }
     }
+
 
     private boolean boardContains(int row, int col) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
@@ -134,6 +138,7 @@ public class Board extends JPanel {
     public void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor);
+        System.out.println(activeCells + selectedColor.toString());
     }
 
     public boolean gameOver() {
