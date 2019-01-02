@@ -15,7 +15,7 @@ public class Cell extends JPanel{
 
     private Color color;
 
-    public Cell(int col, int row, Color color) {
+    public Cell(int row, int col, Color color) {
         this.col = col;
         this.row = row;
 

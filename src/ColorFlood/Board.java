@@ -34,11 +34,13 @@ public class Board extends JPanel {
         Random random = new Random();
         int cellColor;
         gameBoard = new Cell[GAME_COLUMNS][GAME_ROWS];
-        for (int col = 0; col < GAME_COLUMNS; col++) {
-            for (int row = 0; row < GAME_ROWS; row++) {
+        for (int row = 0; row < GAME_ROWS; row++) {
+            for (int col = 0; col < GAME_COLUMNS; col++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
-                Cell newCell = new Cell(col, row, Properties.COLORS[cellColor]);
-                gameBoard[col][row] = newCell;
+
+                Cell newCell = new Cell(row, col,Properties.COLORS[cellColor]);
+                gameBoard[row][col] = newCell;
+
             }
         }
     }
@@ -54,7 +56,7 @@ public class Board extends JPanel {
     private void addBoardPanelComponents() {
         for(int col = 0; col < GAME_COLUMNS; col++) {
             for(int row = 0; row < GAME_ROWS; row++) {
-                add(gameBoard[col][row]);
+                add(gameBoard[row][col]);
             }
         }
     }
@@ -71,7 +73,7 @@ public class Board extends JPanel {
     private void activateNeighbors() {
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
-                Cell cell = gameBoard[col][row];
+                Cell cell = gameBoard[row][col];
                 if (cell.isActive()) {
                     neighborsToActivate(cell);
                 }
@@ -80,79 +82,51 @@ public class Board extends JPanel {
 
     private void neighborsToActivate(Cell cell) {
         //top
-        setCellActive(cell.getCol(), cell.getRow() - 1);
+        setCellActive(cell.getRow() - 1, cell.getCol());
 
         //bottom
-        setCellActive(cell.getCol(), cell.getRow() + 1);
+        setCellActive(cell.getRow() + 1, cell.getCol());
 
         //left
-        setCellActive(cell.getCol() - 1, cell.getRow());
+        setCellActive(cell.getRow(), cell.getCol() - 1);
 
         //right
-        setCellActive(cell.getCol() + 1, cell.getRow());
+        setCellActive(cell.getRow(), cell.getCol() + 1);
     }
 
-    public void setCellActive(int col, int row) {
-        if (boardContains(col, row)) {
-            if (!gameBoard[col][row].isActive()) {
-                if (gameBoard[col][row].getColor() == selectedColor) {
-                    gameBoard[col][row].setActive(true);
+    public void setCellActive(int row, int col) {
+        if (boardContains(row, col)) {
+            if (!gameBoard[row][col].isActive()) {
+                if (gameBoard[row][col].getColor() == selectedColor) {
+                    gameBoard[row][col].setActive(true);
+                    activateNeighbors();
                     activeCells++;
                 }
             }
         }
     }
 
-    public void activateFirstCell(int col, int row)
+    public void activateFirstCell(int row, int col)
     {
-        if (boardContains(col, row))
+        if (boardContains(row, col))
         {
-            gameBoard[col][row].setActive(true);
+            gameBoard[row][col].setActive(true);
             activeCells++;
-            firstCell = gameBoard[col][row];
+
+            firstCell = gameBoard[row][col];
             setSelectedColor(firstCell.getColor());
-            neighborsToActivate(firstCell);
         }
     }
 
-//    public void firstCellNeighborsToActivate(Cell cell)
-//    {
-//        //top
-//        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() - 1);
-//
-//        //bottom
-//        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() + 1);
-//
-//        //left
-//        setFirstCellNeighborsActive(cell.getCol() - 1, cell.getRow());
-//
-//        //right
-//        setFirstCellNeighborsActive(cell.getCol() + 1, cell.getRow());
-//    }
 
-//    public void setFirstCellNeighborsActive(int col, int row)
-//    {
-//        if (boardContains(col, row))
-//        {
-//            if (!gameBoard[col][row].isActive())
-//            {
-//                if (gameBoard[col][row].getColor() == firstCell.getColor())
-//                {
-//                    gameBoard[col][row].setActive(true);
-//                    activeCells++;
-//                }
-//            }
-//        }
-//    }
-
-    private boolean boardContains(int col, int row) {
+    private boolean boardContains(int row, int col) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
     }
 
     private void colorActiveCells(Color color) {
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
-                Cell cell = gameBoard[col][row];
+                Cell cell = gameBoard[row][col];
                 if (cell.isActive()) {
                     cell.setColor(color);
                 }

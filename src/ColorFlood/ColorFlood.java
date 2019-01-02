@@ -126,7 +126,7 @@ public class ColorFlood extends JFrame {
 
                 System.out.println("first click happened");
 
-                board.activateFirstCell(col, row);
+                board.activateFirstCell(row, col);
 
                 removeFirstClickListeners();
                 toggleColorControlButtons(true);
@@ -202,12 +202,12 @@ public class ColorFlood extends JFrame {
 
     private void setUpColorButtonsList() {
 
-        buttonYellow = new JButton();
         buttonRed = new JButton();
-        buttonBlue = new JButton();
-        buttonGreen = new JButton();
-        buttonMagenta = new JButton();
         buttonCyan = new JButton();
+        buttonYellow = new JButton();
+        buttonGreen = new JButton();
+        buttonBlue = new JButton();
+        buttonMagenta = new JButton();
 
         colorButtons = new ArrayList<>();
         colorButtons.add(buttonRed);
