@@ -131,3 +131,4 @@ public class SetCellActiveTest
 		assertTrue(board.gameBoard[2][0].isActive() == true);
 	}
 }
+

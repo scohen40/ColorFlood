@@ -17,9 +17,9 @@ public class ColorFlood extends JFrame {
     private Board board;
     private JPanel controlsPanel;
 
-    private Countdown gameTimer = new Countdown();
-    private String time = gameTimer.getRemainingTimeString();
-    private JLabel clock = new JLabel(time);
+    private Countdown gameTimer;
+    private String time;
+    private JLabel clock;
 
     private MouseListener firstClickListener;
 
@@ -31,7 +31,7 @@ public class ColorFlood extends JFrame {
     private JButton buttonMagenta;
     private ArrayList<JButton> colorButtons;
 
-    protected ColorFlood() {
+    public ColorFlood() {
 
         initializeGamePanel();
 
@@ -50,12 +50,30 @@ public class ColorFlood extends JFrame {
 
     }
 
+//    public void init(){
+//
+//        setUpTimerPanel();
+//        setUpBoardPanel();
+//        setUpControlPanel();
+//
+//        panel.add(timerPanel, BorderLayout.NORTH);
+//        panel.add(board, BorderLayout.CENTER);
+//        panel.add(controlsPanel, BorderLayout.SOUTH);
+//
+//        add(panel);
+//
+//
+//        gameTimer.runTimer();
+//
+//    }
+
     private void initializeGamePanel() {
         panel = new JPanel();
         setTitle("Color Flood");
         setSize(Properties.MAIN_PANEL_WIDTH, Properties.MAIN_PANEL_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
@@ -70,10 +88,15 @@ public class ColorFlood extends JFrame {
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
+        gameTimer = new Countdown();
+        time = gameTimer.getRemainingTimeString();
+        clock = new JLabel(time);
+
         clock.setForeground(Color.white);
         clock.setFont(new Font("clock", Font.BOLD, 30));
         timerPanel.add(clock);
     }
+
 
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
@@ -162,6 +185,7 @@ public class ColorFlood extends JFrame {
         }
     }
 
+
     private void setUpControlPanel() {
 
         initializeControlPanel();
@@ -231,31 +255,37 @@ public class ColorFlood extends JFrame {
     private void redButtonClicked(ActionEvent actionEvent) {
         System.out.println("red clicked");
         board.setSelectedColor(Properties.RED);
+        checkGameWon();
     }
 
     private void cyanButtonClicked(ActionEvent actionEvent) {
         System.out.println("cyan clicked");
         board.setSelectedColor(Properties.CYAN);
+        checkGameWon();
     }
 
     private void yellowButtonClicked(ActionEvent actionEvent) {
         System.out.println("yellow clicked");
         board.setSelectedColor(Properties.YELLOW);
+        checkGameWon();
     }
 
     private void greenButtonClicked(ActionEvent actionEvent) {
         System.out.println("green clicked");
         board.setSelectedColor(Properties.GREEN);
+        checkGameWon();
     }
 
     private void blueButtonClicked(ActionEvent actionEvent) {
         System.out.println("blue clicked");
         board.setSelectedColor(Properties.BLUE);
+        checkGameWon();
     }
 
     private void magentaButtonClicked(ActionEvent actionEvent) {
         System.out.println("magenta clicked");
         board.setSelectedColor(Properties.MAGENTA);
+        checkGameWon();
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
@@ -265,8 +295,9 @@ public class ColorFlood extends JFrame {
         }
     }
 
+
     public class Countdown {
-        private final int INITIAL_TIME = 90_000;
+        private final int INITIAL_TIME = 70_000;
         private int remainingTime;
         private java.util.Timer timer;
 
@@ -283,11 +314,17 @@ public class ColorFlood extends JFrame {
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
                         board.setTime(remainingTime);
-                    }else {timer.cancel();}}
+                        checkTimesUp();
+                    }else {
+                            timer.cancel();
+                            checkTimesUp();
+                        }
+                    }
 
 
                 };
                 timer.schedule(decrement, 50, 1000);
+
         }
 
         String getRemainingTimeString() {
@@ -296,6 +333,61 @@ public class ColorFlood extends JFrame {
             return String.format("%02d:%02d", min, sec);
         }
 
+    }
+
+
+
+    private void checkGameWon(){
+
+        if((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
+            System.out.println("game won");
+            gameWonDialogue();
+        }
+
+    }
+
+    public void checkTimesUp() {
+        if(board.getTime() == 0) {
+            timesUpDialogue();
+        }
+    }
+
+    private void gameWonDialogue() {
+        removeAll();
+        int userAnswer;
+
+        userAnswer = JOptionPane.showConfirmDialog(null,
+                "Congratz. Would you like to play again?",
+                "I'm drowning in color!",
+                JOptionPane.YES_NO_OPTION);
+
+        if(userAnswer == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Thank you for playing!");
+            System.exit(0);
+        } else if(userAnswer == JOptionPane.YES_OPTION) {
+            resetGame();
+        }
+    }
+
+    private void timesUpDialogue() {
+        int userAnswer;
+
+        userAnswer = JOptionPane.showConfirmDialog(null,
+                "Would you like to try again?",
+                "Time is not your friend.",
+                JOptionPane.YES_NO_OPTION);
+
+        if(userAnswer == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(this, "Thanks for trying!");
+            System.exit(0);
+        } else if(userAnswer == JOptionPane.YES_OPTION) {
+            resetGame();
+        }
+    }
+
+    private void resetGame() {
+        this.dispose();
+        new ColorFlood().setVisible(true);
     }
 
 
