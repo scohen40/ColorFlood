@@ -120,6 +120,7 @@ public class ColorFlood extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Cell clickedCell = (Cell) e.getSource();
 
+                //they are pulling the reverse
                 int col = clickedCell.getCol();
                 int row = clickedCell.getRow();
 

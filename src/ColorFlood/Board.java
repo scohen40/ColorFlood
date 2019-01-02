@@ -8,8 +8,8 @@ import java.util.Random;
 public class Board extends JPanel {
 
     public Cell[][] gameBoard;
-    public final int GAME_ROWS;
-    public final int GAME_COLUMNS;
+    private final int GAME_ROWS;
+    private final int GAME_COLUMNS;
     public Color selectedColor;
     private int activeCells;
     private int time;
@@ -37,7 +37,7 @@ public class Board extends JPanel {
         for (int col = 0; col < GAME_COLUMNS; col++) {
             for (int row = 0; row < GAME_ROWS; row++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
-                Cell newCell = new Cell(col, row,Properties.COLORS[cellColor]);
+                Cell newCell = new Cell(col, row, Properties.COLORS[cellColor]);
                 gameBoard[col][row] = newCell;
             }
         }
@@ -110,39 +110,40 @@ public class Board extends JPanel {
             gameBoard[col][row].setActive(true);
             activeCells++;
             firstCell = gameBoard[col][row];
-            firstCellNeighborsToActivate(firstCell);
+            setSelectedColor(firstCell.getColor());
+            neighborsToActivate(firstCell);
         }
     }
 
-    public void firstCellNeighborsToActivate(Cell cell)
-    {
-        //top
-        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() - 1);
+//    public void firstCellNeighborsToActivate(Cell cell)
+//    {
+//        //top
+//        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() - 1);
+//
+//        //bottom
+//        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() + 1);
+//
+//        //left
+//        setFirstCellNeighborsActive(cell.getCol() - 1, cell.getRow());
+//
+//        //right
+//        setFirstCellNeighborsActive(cell.getCol() + 1, cell.getRow());
+//    }
 
-        //bottom
-        setFirstCellNeighborsActive(cell.getCol(), cell.getRow() + 1);
-
-        //left
-        setFirstCellNeighborsActive(cell.getCol() - 1, cell.getRow());
-
-        //right
-        setFirstCellNeighborsActive(cell.getCol() + 1, cell.getRow());
-    }
-
-    public void setFirstCellNeighborsActive(int col, int row)
-    {
-        if (boardContains(col, row))
-        {
-            if (!gameBoard[col][row].isActive())
-            {
-                if (gameBoard[col][row].getColor() == firstCell.getColor())
-                {
-                    gameBoard[col][row].setActive(true);
-                    activeCells++;
-                }
-            }
-        }
-    }
+//    public void setFirstCellNeighborsActive(int col, int row)
+//    {
+//        if (boardContains(col, row))
+//        {
+//            if (!gameBoard[col][row].isActive())
+//            {
+//                if (gameBoard[col][row].getColor() == firstCell.getColor())
+//                {
+//                    gameBoard[col][row].setActive(true);
+//                    activeCells++;
+//                }
+//            }
+//        }
+//    }
 
     private boolean boardContains(int col, int row) {
         return (col < GAME_COLUMNS) && (row < GAME_ROWS) && (col >= 0) && (row >= 0);
@@ -163,6 +164,7 @@ public class Board extends JPanel {
     public void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor);
+        System.out.println(activeCells + selectedColor.toString());
     }
 
     public boolean gameOver() {
