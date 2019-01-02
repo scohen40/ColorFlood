@@ -50,12 +50,30 @@ public class ColorFlood extends JFrame {
 
     }
 
+//    public void init(){
+//
+//        setUpTimerPanel();
+//        setUpBoardPanel();
+//        setUpControlPanel();
+//
+//        panel.add(timerPanel, BorderLayout.NORTH);
+//        panel.add(board, BorderLayout.CENTER);
+//        panel.add(controlsPanel, BorderLayout.SOUTH);
+//
+//        add(panel);
+//
+//
+//        gameTimer.runTimer();
+//
+//    }
+
     private void initializeGamePanel() {
         panel = new JPanel();
         setTitle("Color Flood");
         setSize(Properties.MAIN_PANEL_WIDTH, Properties.MAIN_PANEL_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
@@ -237,37 +255,37 @@ public class ColorFlood extends JFrame {
     private void redButtonClicked(ActionEvent actionEvent) {
         System.out.println("red clicked");
         board.setSelectedColor(Properties.RED);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void cyanButtonClicked(ActionEvent actionEvent) {
         System.out.println("cyan clicked");
         board.setSelectedColor(Properties.CYAN);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void yellowButtonClicked(ActionEvent actionEvent) {
         System.out.println("yellow clicked");
         board.setSelectedColor(Properties.YELLOW);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void greenButtonClicked(ActionEvent actionEvent) {
         System.out.println("green clicked");
         board.setSelectedColor(Properties.GREEN);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void blueButtonClicked(ActionEvent actionEvent) {
         System.out.println("blue clicked");
         board.setSelectedColor(Properties.BLUE);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void magentaButtonClicked(ActionEvent actionEvent) {
         System.out.println("magenta clicked");
         board.setSelectedColor(Properties.MAGENTA);
-        checkGameOver();
+        checkGameWon();
     }
 
     private void toggleColorControlButtons(Boolean clickable) {
@@ -279,7 +297,7 @@ public class ColorFlood extends JFrame {
 
 
     public class Countdown {
-        private final int INITIAL_TIME = 90_000;
+        private final int INITIAL_TIME = 70_000;
         private int remainingTime;
         private java.util.Timer timer;
 
@@ -296,10 +314,10 @@ public class ColorFlood extends JFrame {
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
                         board.setTime(remainingTime);
-                        checkGameOver();
+                        checkTimesUp();
                     }else {
                             timer.cancel();
-                            checkGameOver();
+                            checkTimesUp();
                         }
                     }
 
@@ -319,23 +337,23 @@ public class ColorFlood extends JFrame {
 
 
 
-    private void checkGameOver(){
-        if (gameWon()){
+    private void checkGameWon(){
+
+        if((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
+            System.out.println("game won");
             gameWonDialogue();
-        } else if(timesUp()) {
+        }
+
+    }
+
+    public void checkTimesUp() {
+        if(board.getTime() == 0) {
             timesUpDialogue();
         }
     }
 
-    public boolean gameWon() {
-        return (board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells();
-    }
-
-    public boolean timesUp() {
-        return board.getTime() == 0;
-    }
-
     private void gameWonDialogue() {
+        removeAll();
         int userAnswer;
 
         userAnswer = JOptionPane.showConfirmDialog(null,
@@ -360,7 +378,7 @@ public class ColorFlood extends JFrame {
                 JOptionPane.YES_NO_OPTION);
 
         if(userAnswer == JOptionPane.NO_OPTION) {
-            JOptionPane.showMessageDialog(null, "Thanks for trying!");
+            JOptionPane.showMessageDialog(this, "Thanks for trying!");
             System.exit(0);
         } else if(userAnswer == JOptionPane.YES_OPTION) {
             resetGame();
