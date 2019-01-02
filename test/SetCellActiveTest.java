@@ -14,12 +14,14 @@ public class SetCellActiveTest
 	public void checkRightCellChangeColor()
 	{
 		//given
-		Board board = new Board(2,1);
+		Board board = new Board(2,2);
 		board.gameBoard[0][0] = new Cell(0, 0, Color.RED);
 		board.gameBoard[1][0] = new Cell(1, 0, Color.BLUE);
+		board.gameBoard[0][1] = new Cell(0, 1, Color.YELLOW);
+		board.gameBoard[1][1] = new Cell(1, 1, Color.YELLOW);
 
 		//when
-		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
+		board.activateFirstCell(board.gameBoard[0][0].getRow(), board.gameBoard[0][0].getCol());
 		board.setSelectedColor(Color.BLUE);
 
 		//then
@@ -30,9 +32,11 @@ public class SetCellActiveTest
 	public void checkRightCellNotChangeColor()
 	{
 		//given
-		Board board = new Board(2,1);
+		Board board = new Board(2,2);
 		board.gameBoard[0][0] = new Cell(0, 0, Color.RED);
 		board.gameBoard[1][0] = new Cell(1, 0, Color.BLUE);
+		board.gameBoard[0][1] = new Cell(0, 1, Color.YELLOW);
+		board.gameBoard[1][1] = new Cell(1, 1, Color.YELLOW);
 
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
@@ -96,9 +100,6 @@ public class SetCellActiveTest
 		//when
 		board.activateFirstCell(board.gameBoard[0][0].getCol(), board.gameBoard[0][0].getRow());
 		board.setSelectedColor(Color.YELLOW);
-		/*board.gameBoard[0][0].setActive(true);
-		board.gameBoard[1][0].setActive(true);
-		board.gameBoard[2][0].setActive(true);*/
 
 		//then
 		assertTrue(board.gameBoard[0][0].getColor() == Color.YELLOW);
