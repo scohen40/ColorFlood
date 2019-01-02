@@ -39,10 +39,8 @@ public class Board extends JPanel {
         for (int row = 0; row < GAME_ROWS; row++) {
             for (int col = 0; col < GAME_COLUMNS; col++) {
                 cellColor = random.nextInt(Properties.COLORS.length);
-
                 Cell newCell = new Cell(row, col,Properties.COLORS[cellColor]);
                 gameBoard[row][col] = newCell;
-
             }
         }
     }
@@ -81,7 +79,8 @@ public class Board extends JPanel {
                     neighborsToActivate(cell);
                 }
             }
-        }}
+        }
+    }
 
     private void neighborsToActivate(Cell cell) {
         //top
@@ -115,7 +114,6 @@ public class Board extends JPanel {
         {
             gameBoard[row][col].setActive(true);
             activeCells++;
-
             firstCell = gameBoard[row][col];
             setSelectedColor(firstCell.getColor());
         }
@@ -142,10 +140,6 @@ public class Board extends JPanel {
         activateNeighbors();
         colorActiveCells(selectedColor);
         System.out.println(activeCells + selectedColor.toString());
-    }
-
-    public Cell[][] getGameBoard() {
-        return gameBoard;
     }
 
     public int getActiveCells() {

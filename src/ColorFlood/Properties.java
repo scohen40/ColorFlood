@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 public class Properties {
 
     public static final Color BACKGROUND_COLOR = Color.BLACK;
-
-
     public static final Color RED = Color.RED;
     public static final Color CYAN = Color.CYAN;
     public static final Color YELLOW = Color.YELLOW;

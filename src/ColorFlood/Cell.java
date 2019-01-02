@@ -7,10 +7,6 @@ public class Cell extends JPanel{
 
     private int row;
     private int col;
-
-    private int rowHeight;
-    private int colWidth;
-
     private boolean active = false;
 
     private Color color;
@@ -36,7 +32,6 @@ public class Cell extends JPanel{
 
     private void paintSquare(Graphics g) {
         g.setColor(color);
-        //g.setColor(Color.white);
         g.fillRoundRect(
                 0,
                 0,
@@ -44,7 +39,6 @@ public class Cell extends JPanel{
                 getHeight(),
                 10,
                 10);
-
     }
 
     public int getCol()
