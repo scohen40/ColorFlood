@@ -24,8 +24,8 @@ public class Properties {
 
     public static final String[] DIFFICULTY = {"easy", "medium", "hard"};
 
-    public static final int GAME_COLUMNS_EASY = 6;
-    public static final int GAME_ROWS_EASY = 6;
+    public static final int GAME_COLUMNS_EASY = 10;
+    public static final int GAME_ROWS_EASY = 10;
 
     public static final int GAME_COLUMNS_MEDIUM = 15;
     public static final int GAME_ROWS_MEDIUM = 15;
