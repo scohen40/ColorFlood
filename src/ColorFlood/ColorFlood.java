@@ -12,11 +12,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ColorFlood extends JFrame {
+
     private JPanel panel;
     private JPanel timerPanel;
     private Board board;
     private JPanel controlsPanel;
-
     private Countdown gameTimer;
     private String time;
     private JLabel clock;
@@ -32,7 +32,6 @@ public class ColorFlood extends JFrame {
     private ArrayList<JButton> colorButtons;
 
     public ColorFlood() {
-
         initializeGamePanel();
 
         setUpTimerPanel();
@@ -45,27 +44,8 @@ public class ColorFlood extends JFrame {
 
         add(panel);
 
-
         gameTimer.runTimer();
-
     }
-
-//    public void init(){
-//
-//        setUpTimerPanel();
-//        setUpBoardPanel();
-//        setUpControlPanel();
-//
-//        panel.add(timerPanel, BorderLayout.NORTH);
-//        panel.add(board, BorderLayout.CENTER);
-//        panel.add(controlsPanel, BorderLayout.SOUTH);
-//
-//        add(panel);
-//
-//
-//        gameTimer.runTimer();
-//
-//    }
 
     private void initializeGamePanel() {
         panel = new JPanel();
@@ -80,7 +60,6 @@ public class ColorFlood extends JFrame {
 
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
-
 
     private void setUpTimerPanel() {
         timerPanel = new JPanel();
@@ -97,7 +76,6 @@ public class ColorFlood extends JFrame {
         timerPanel.add(clock);
     }
 
-
     private void setUpBoardPanel() {
         String difficulty = setDifficultyQuery();
         board = new BoardBuilder(difficulty).getBoard();
@@ -106,21 +84,18 @@ public class ColorFlood extends JFrame {
     }
 
     private String setDifficultyQuery() {
-
         String userInput = (String) JOptionPane.showInputDialog(
                 null,
                 "Please select the level of difficulty for the game. " +
                         "\nIf you do not answer, the difficulty will be set for you. " +
-                        "\n\nWhen you exit this window you must select the starting cell. " +
+                        "\n\nWhen you exit this window, you must select the starting cell. " +
                         "\nGood luck!",
                 "Level Selection", JOptionPane.QUESTION_MESSAGE,
                 null,
                 Properties.DIFFICULTY, // Array of choices
                 Properties.DIFFICULTY[0]); // Initial choice
 
-
         if ((userInput != null) && (userInput.length() > 0)) {
-
             return userInput;
         } else {
             return Properties.DIFFICULTY[2];
@@ -143,7 +118,6 @@ public class ColorFlood extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Cell clickedCell = (Cell) e.getSource();
 
-                //they are pulling the reverse
                 int col = clickedCell.getCol();
                 int row = clickedCell.getRow();
 
@@ -185,9 +159,7 @@ public class ColorFlood extends JFrame {
         }
     }
 
-
     private void setUpControlPanel() {
-
         initializeControlPanel();
 
         setUpControlColorButtons();
@@ -201,7 +173,6 @@ public class ColorFlood extends JFrame {
     }
 
     private void setUpControlColorButtons() {
-
         setUpColorButtonsList();
 
         int colorIndex = 0;
@@ -225,7 +196,6 @@ public class ColorFlood extends JFrame {
     }
 
     private void setUpColorButtonsList() {
-
         buttonRed = new JButton();
         buttonCyan = new JButton();
         buttonYellow = new JButton();
@@ -240,7 +210,6 @@ public class ColorFlood extends JFrame {
         colorButtons.add(buttonGreen);
         colorButtons.add(buttonBlue);
         colorButtons.add(buttonMagenta);
-
     }
 
     public void addColorControlButtonsListeners() {
@@ -290,11 +259,9 @@ public class ColorFlood extends JFrame {
 
     private void toggleColorControlButtons(Boolean clickable) {
         for (JButton button : colorButtons) {
-
             button.setEnabled(clickable);
         }
     }
-
 
     public class Countdown {
         private final int INITIAL_TIME = 70_000;
@@ -320,11 +287,8 @@ public class ColorFlood extends JFrame {
                             checkTimesUp();
                         }
                     }
-
-
                 };
                 timer.schedule(decrement, 50, 1000);
-
         }
 
         String getRemainingTimeString() {
@@ -332,18 +296,13 @@ public class ColorFlood extends JFrame {
             int sec = remainingTime % 60_000 / 1000;
             return String.format("%02d:%02d", min, sec);
         }
-
     }
 
-
-
     private void checkGameWon(){
-
         if((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
             System.out.println("game won");
             gameWonDialogue();
         }
-
     }
 
     public void checkTimesUp() {
@@ -390,9 +349,7 @@ public class ColorFlood extends JFrame {
         new ColorFlood().setVisible(true);
     }
 
-
     public static void main (String[]args){
-
         new ColorFlood().setVisible(true);
     }
 }
