@@ -55,7 +55,6 @@ public class ColorFlood extends JFrame {
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
-
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
@@ -166,6 +165,8 @@ public class ColorFlood extends JFrame {
         controlsPanel.setLayout(new GridLayout(1, 0));
         controlsPanel.setBackground(Properties.BACKGROUND_COLOR);
         controlsPanel.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+
+        controlsPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
     }
 
     private void setUpControlColorButtons() {
@@ -177,10 +178,8 @@ public class ColorFlood extends JFrame {
             button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             button.setIcon(Properties.createImageIcon(
                     Properties.COLORS[colorIndex],
-                    Properties.COLOR_BUTTON_WIDTH,
+                    Properties.COLOR_BUTTON_WIDTH ,
                     Properties.COLOR_BUTTON_HEIGHT));
-
-            button.setBorder(new EmptyBorder(0, 50, 0, 50));
 
             controlsPanel.add(button);
             colorIndex++;
